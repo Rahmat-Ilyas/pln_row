@@ -23,7 +23,7 @@ if (isset($_POST['login'])) {
             exit();
         } else $err_pass = true;
     } else {
-        $timrow = mysqli_query($conn, "SELECT * FROM tb_timrow WHERE username = '$username'");
+        $timrow = mysqli_query($conn, "SELECT * FROM tb_anggota WHERE username = '$username'");
         $get = mysqli_fetch_assoc($timrow);
         if ($get) {
             $get_password = $get['password'];
