@@ -75,20 +75,19 @@
             </li>
 
             <li class="has-submenu">
-              <a href="javascript:void(0);" class="waves-effect"><i class="ti-truck"></i> <span> Pengerjaan </span></a>
-              <ul class="submenu">
-                <li><a href="pengerjaan-baru.php">Pengerjaan Baru</a></li>
-                <li><a href="laporan-pengerjaan.php">Laporan Pengerjaan</a></li>
-                <li><a href="ui-loading-buttons.html">Riwayat Pengerjaan</a></li>
-              </ul>
+              <a href="pengerjaan-baru.php" class="waves-effect"><i class=" fa fa-calendar-plus-o"></i> <span> Pengerjaan Baru</span></a>
             </li>
 
             <li class="has-submenu">
-              <a href="javascript:void(0);" class="waves-effect"><i class="ti-star"></i><span> Rating </span> </a>
+              <a href="data-pengerjaan.php" class="waves-effect"><i class="fa fa-calendar"></i> <span> Data Pengerjaan </span> </a>
             </li>
 
             <li class="has-submenu">
-              <a href="javascript:void(0);" class="waves-effect"><i class="ti-id-badge"></i> <span> Data Anggota </span> </a>
+              <a href="riwayat-pengerjaan.php" class="waves-effect"><i class="fa fa-history"></i> <span> Riwayat Pengerjaan </span> </a>
+            </li>
+
+            <li class="has-submenu">
+              <a href="rating-pengerjaan.php" class="waves-effect"><i class="ti-star"></i><span> Rating </span> </a>
             </li>
 
           </ul>

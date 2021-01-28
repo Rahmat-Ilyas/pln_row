@@ -88,7 +88,7 @@
                 </li>
 
                 <li class="has_sub">
-                  <a href="javascript:void(0);" class="waves-effect"><i class="ti-truck"></i> <span> Pengerjaan </span> <span class="menu-arrow"></span> </a>
+                  <a href="javascript:void(0);" class="waves-effect"><i class="fa fa-table"></i> <span>Data Pengerjaan </span> <span class="menu-arrow"></span> </a>
                   <ul class="list-unstyled">
                     <li><a href="ui-buttons.html">Pengerjaan Baru</a></li>
                     <li><a href="ui-loading-buttons.html">Laporan Pengerjaan</a></li>
@@ -97,7 +97,19 @@
                 </li>
 
                 <li class="has_sub">
+                  <a href="javascript:void(0);" class="waves-effect"><i class="fa fa-file-text-o"></i><span> Laporan </span> </a>
+                </li>
+
+                <li class="has_sub">
                   <a href="javascript:void(0);" class="waves-effect"><i class="ti-star"></i><span> Rating </span> </a>
+                </li>
+
+                <li class="has_sub">
+                  <a href="javascript:void(0);" class="waves-effect"><i class="fa fa-calendar"></i><span> Priode Laporan </span> </a>
+                </li>
+
+                <li class="has_sub">
+                  <a href="javascript:void(0);" class="waves-effect"><i class="fa fa-map-o"></i><span> Set Radius </span> </a>
                 </li>
 
                 <li class="has_sub">

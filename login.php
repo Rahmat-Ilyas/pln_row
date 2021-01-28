@@ -2,6 +2,7 @@
 require('config.php');
 
 if (isset($_SESSION['login_kldevis'])) header("location: kepala-devisi/");
+if (isset($_SESSION['login_timrow'])) header("location: tim-row/");
 
 $password = null;
 $username = null;
@@ -72,7 +73,7 @@ if (isset($_POST['login'])) {
     <div class="account-pages"></div>
     <div class="clearfix"></div>
     <div class="wrapper-page">
-     <div class=" card-box">
+       <div class=" card-box">
         <div class="panel-heading m-b-0"> 
             <h3 class="text-center"><img src="assets/images/pln_logo.png" height="50"/> <strong>PLN UPT</strong></h3>
         </div> 
@@ -108,7 +109,12 @@ if (isset($_POST['login'])) {
 
         </div>   
     </div>
+    <div class="row">
+        <div class="col-sm-12 text-center">
+            <p>Daftar anggota Tim Rows? <a href="registrasi.php" class="text-primary m-l-5"><b>Disini</b></a></p>
 
+        </div>
+    </div>
 </div>
 
 
