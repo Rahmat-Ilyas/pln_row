@@ -1,3 +1,6 @@
+<?php 
+require('../config.php');
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -91,9 +94,12 @@
                   <a href="javascript:void(0);" class="waves-effect"><i class="fa fa-table"></i> <span>Data Pengerjaan </span> <span class="menu-arrow"></span> </a>
                   <ul class="list-unstyled">
                     <li><a href="ui-buttons.html">Pengerjaan Baru</a></li>
-                    <li><a href="ui-loading-buttons.html">Laporan Pengerjaan</a></li>
                     <li><a href="ui-loading-buttons.html">Riwayat Pengerjaan</a></li>
                   </ul>
+                </li>
+
+                <li class="has_sub">
+                  <a href="javascript:void(0);" class="waves-effect"><i class="ti-star"></i><span> Rating Pengerjaan</span> </a>
                 </li>
 
                 <li class="has_sub">
@@ -101,15 +107,11 @@
                 </li>
 
                 <li class="has_sub">
-                  <a href="javascript:void(0);" class="waves-effect"><i class="ti-star"></i><span> Rating </span> </a>
-                </li>
-
-                <li class="has_sub">
                   <a href="javascript:void(0);" class="waves-effect"><i class="fa fa-calendar"></i><span> Priode Laporan </span> </a>
                 </li>
 
                 <li class="has_sub">
-                  <a href="javascript:void(0);" class="waves-effect"><i class="fa fa-map-o"></i><span> Set Radius </span> </a>
+                  <a href="set-radius.php" class="waves-effect"><i class="fa fa-map-o"></i><span> Set Radius </span> </a>
                 </li>
 
                 <li class="has_sub">

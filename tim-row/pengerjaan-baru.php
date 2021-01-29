@@ -26,16 +26,61 @@ require('template/header.php');
             <div class="col-md-12">
               <form class="form-horizontal" role="form">
                 <div class="form-group">
-                  <label class="col-md-4 control-label">Tanngal Pengajuan</label>
+                  <label class="col-md-4 control-label">Unit Pengajuan</label>
                   <div class="col-md-5">
-                    <input type="date" class="form-control" value="<?= date('Y-m-d'); ?>" readonly="">
+                    <select class="form-control" name="unit">
+                      <option>UPT SISTEM MAKASSAR</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="col-md-4 control-label">Gardu Induk</label>
+                  <div class="col-md-5">
+                    <select class="form-control" name="gardu_induk">
+                      <option>GARDU UTP MAKASSAR</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="col-md-4 control-label">Formulir/Komponen</label>
+                  <div class="col-md-5">
+                    <input type="text" class="form-control" placeholder="Formulir/Komponen Pengerjaan.." name="formulir" required="">
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="col-md-4 control-label">Nomor Tiang</label>
+                  <div class="col-md-5">
+                    <input type="number" class="form-control" placeholder="Nomor Tiang.." name="nomor_tiang" required="">
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="col-md-4 control-label">Keterangan</label>
+                  <div class="col-md-5">
+                    <textarea class="form-control" rows="2" placeholder="Keterangan.." name="keterangan" required=""></textarea>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="col-md-4 control-label">Tanggal Mulai</label>
+                  <div class="col-md-5">
+                    <input type="date" class="form-control" name="tggl_mulai" value="<?= date('Y-m-d') ?>" required="">
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="col-md-4 control-label">Tanggal Selesai</label>
+                  <div class="col-md-5">
+                    <input type="date" class="form-control" name="tggl_selesai" value="<?= date('Y-m-d') ?>" required="">
                   </div>
                 </div>
                 <div class="form-group">
-                  <h3 class="col-md-12 text-center">Atur Lokasi Pengerjaan</h3>
-                  <div class="col-md-12">
-                    <div id="map" style="float: left; height: 450px; width: 50%;"></div>
-                    <div class="m-b-10" id="pano" style="float: left; height: 450px; width: 50%;"></div>
+                  <label class="col-md-4 control-label">Lokasi Pengerjaan</label>
+                  <div class="col-md-5">
+                    <div id="map" style="height: 300px;"></div>
                     <input type="hidden" name="latitude" id="latitude">
                     <input type="hidden" name="longitude" id="longitude">
                   </div>
@@ -43,43 +88,7 @@ require('template/header.php');
                 <div class="form-group">
                   <label class="col-md-4 control-label">Detail Lokasi</label>
                   <div class="col-md-5">
-                    <textarea class="form-control" rows="2" placeholder="Detail Lokasi"></textarea>
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label class="col-md-4 control-label">Nomor Tiang</label>
-                  <div class="col-md-5">
-                    <input type="number" class="form-control" placeholder="Nomor Tiang">
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label class="col-md-4 control-label">Komponen Pengerjaan</label>
-                  <div class="col-md-5">
-                    <input type="text" class="form-control" placeholder="Komponen Pengerjaan">
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label class="col-md-4 control-label">Keterangan</label>
-                  <div class="col-md-5">
-                    <textarea class="form-control" rows="2" placeholder="Keterangan"></textarea>
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label class="col-md-4 control-label">Sasaran Pengerjaan</label>
-                  <div class="col-md-5">
-                    <textarea class="form-control" rows="2" placeholder="Sasaran Pengerjaan"></textarea>
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label class="col-md-4 control-label">Tanggal Mulai</label>
-                  <div class="col-md-5">
-                    <input type="date" class="form-control">
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label class="col-md-4 control-label">Tanggal Selesai</label>
-                  <div class="col-md-5">
-                    <input type="date" class="form-control">
+                    <textarea class="form-control" rows="2" placeholder="Detail Lokasi.." name="lokasi" required=""></textarea>
                   </div>
                 </div>
                 <div class="form-group">

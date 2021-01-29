@@ -14,7 +14,7 @@ require('template/header.php');
             <h4 class="page-title">Dashboard</h4>
             <ol class="breadcrumb">
               <li>
-                <a href="#">Tim ROW</a>
+                <a href="#">Kepala Devisi</a>
               </li>
               <li class="active">
                 Dashboard
