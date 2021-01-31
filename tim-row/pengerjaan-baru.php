@@ -1,12 +1,8 @@
 <?php 
 require('template/header.php');
 
-$radius = mysqli_query($conn, "SELECT * FROM tb_radius");
-$rds = mysqli_fetch_assoc($radius);
-
 if (isset($_POST['submit'])) {
-  var_dump($_POST); exit();
-
+  $res = add_data('tb_pengerjaan', $_POST);
 }
 ?>
 
@@ -120,3 +116,23 @@ if (isset($_POST['submit'])) {
 <?php 
 require('template/footer.php');
 ?>
+
+<script type="text/javascript">
+  $(document).ready(function($) {
+    <?php if (isset($res) && $res['status'] == 'success') { ?>
+        Swal.fire({
+          title: 'Berhasil Ditambah',
+          text: "<?= $res['message'] ?>",
+          type: 'success'
+        }).then(function() {
+          location.href = 'data-pengerjaan.php';
+        });
+      <?php } else if (isset($res) && $res['status'] == 'error') { ?>
+        Swal.fire({
+          title: 'Terjadi Kesalahan',
+          text: "<?= $res['message'] ?>",
+          type: 'error'
+        });
+      <?php } ?>
+  });
+</script>

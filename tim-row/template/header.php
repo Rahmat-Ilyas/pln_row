@@ -3,6 +3,9 @@ require('../config.php');
 
 if (!isset($_SESSION['login_timrow'])) header("location: ../login.php");
 $anggota_id = $_SESSION['anggota_id'];
+
+$radius = mysqli_query($conn, "SELECT * FROM tb_radius");
+$rds = mysqli_fetch_assoc($radius);
 ?>
 <!DOCTYPE html>
 <html>
@@ -25,8 +28,8 @@ $anggota_id = $_SESSION['anggota_id'];
   <link href="assets/css/responsive.css" rel="stylesheet" type="text/css" />
 
   <!-- DataTables -->
-  <link href="assets/plugins/datatables/jquery.dataTables.min.css" rel="stylesheet" type="text/css"/>
-  <link href="assets/plugins/datatables/buttons.bootstrap.min.css" rel="stylesheet" type="text/css"/>
+  <link href="../assets/plugins/datatables/jquery.dataTables.min.css" rel="stylesheet" type="text/css"/>
+  <link href="../assets/plugins/datatables/buttons.bootstrap.min.css" rel="stylesheet" type="text/css"/>
 
   <script src="assets/js/modernizr.min.js"></script>
 

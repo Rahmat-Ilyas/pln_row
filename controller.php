@@ -1,18 +1,32 @@
 <?php 
 // Add Data 
 function add_data($table, $data) {
+	global $conn;
 	$get_field = mysqli_query($conn, "SHOW COLUMNS FROM $table");
-	$field[] = 'NULL';
+	$value[] = 'NULL';
 	foreach ($get_field as $dta) {
-		$field[] = $dta['Field'];
 		if (array_key_exists($dta['Field'], $data)) {
-			echo "Key exists!";
-		} else {
-			echo "Key does not exist!";
+			$key = $dta['Field'];
+			$value[] = "'$data[$key]'";
 		}
 	}
 
-	$query = "INSERT INTO tb_school VALUES (NULL, '$user_id', '$npsn', '$name_school', '$address', '$logo_school', '$school_level', '$status_school')";
+	$field = implode(", ", $value);
+	$query = "INSERT INTO $table VALUES ($field)";
+	mysqli_query($conn, $query);
+
+	if (mysqli_affected_rows($conn) > 0) {
+		$response = [
+			'status' => 'success',
+			'message' => 'Pengerjaan baru berhasil ditambahkan. Silahkan isi data pengerjaan!',
+		];
+	} else { 
+		$response = [
+			'status' => 'error',
+			'message' => mysqli_error($conn),
+		];
+	}
+	return $response;
 }
 
 ?>

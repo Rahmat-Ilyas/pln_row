@@ -1,6 +1,8 @@
 <?php 
 require('config.php');
 
+if (isset($_SESSION['login_timrow'])) header("location: tim-row/");
+
 $response = '';
 if (isset($_POST['submit'])) {
 	$nip = $_POST['nip'];
