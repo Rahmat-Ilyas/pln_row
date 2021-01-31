@@ -31,7 +31,7 @@ if (isset($_POST['login'])) {
             $get_id = $get['id'];
             if (password_verify($password, $get_password)) {
                 $_SESSION['login_timrow'] = $get_password;
-                $_SESSION['timrow_id'] = $get_id;
+                $_SESSION['anggota_id'] = $get_id;
                 header("location: tim-row/");
                 exit();
             } else $err_pass = true;

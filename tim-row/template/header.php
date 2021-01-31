@@ -1,5 +1,8 @@
 <?php 
 require('../config.php');
+
+if (!isset($_SESSION['login_timrow'])) header("location: ../login.php");
+$anggota_id = $_SESSION['anggota_id'];
 ?>
 <!DOCTYPE html>
 <html>

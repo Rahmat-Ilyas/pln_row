@@ -39,6 +39,7 @@
 
 <script src="assets/plugins/datatables/dataTables.buttons.min.js"></script>
 <script src="assets/plugins/datatables/buttons.bootstrap.min.js"></script>
+<script src="assets/plugins/sweetalert2/sweetalert2.all.min.js"></script>
 
 <!-- Google Maps -->
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBhUwwpTQamL6ZhPKT2x2j2nI-eWNR8bZ0&callback=initialize&libraries=&v=weekly"

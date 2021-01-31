@@ -3,6 +3,11 @@ require('template/header.php');
 
 $radius = mysqli_query($conn, "SELECT * FROM tb_radius");
 $rds = mysqli_fetch_assoc($radius);
+
+if (isset($_POST['submit'])) {
+  var_dump($_POST); exit();
+
+}
 ?>
 
 <div class="row">
@@ -27,10 +32,11 @@ $rds = mysqli_fetch_assoc($radius);
           <h4 class="m-b-20 header-title text-center"><b>Input Data Pengerjaan</b></h4>
           <div class="row">
             <div class="col-md-12">
-              <form class="form-horizontal" role="form">
+              <form class="form-horizontal" role="form" method="POST">
                 <div class="form-group">
                   <label class="col-md-4 control-label">Unit Pengajuan</label>
                   <div class="col-md-5">
+                    <input type="hidden" name="anggota_id" value="<?= $anggota_id ?>">
                     <select class="form-control" name="unit">
                       <option>UPT SISTEM MAKASSAR</option>
                     </select>
@@ -99,7 +105,7 @@ $rds = mysqli_fetch_assoc($radius);
                 <div class="form-group">
                   <div class="col-md-4"></div>
                   <div class="col-md-5">
-                    <button type="submit" class="btn waves-effect waves-light btn-primary">Submit</button>
+                    <button type="submit" name="submit" class="btn waves-effect waves-light btn-primary">Submit</button>
                   </div>
                 </div>
               </form>
