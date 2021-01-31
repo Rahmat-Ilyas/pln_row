@@ -16,7 +16,7 @@ if (isset($_POST['submit'])) {
   }
 }
 
-$radius = mysqli_query($conn, "SELECT * FROm tb_radius");
+$radius = mysqli_query($conn, "SELECT * FROM tb_radius");
 $rds = mysqli_fetch_assoc($radius);
 
 ?>

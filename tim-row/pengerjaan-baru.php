@@ -1,5 +1,8 @@
 <?php 
 require('template/header.php');
+
+$radius = mysqli_query($conn, "SELECT * FROM tb_radius");
+$rds = mysqli_fetch_assoc($radius);
 ?>
 
 <div class="row">
@@ -81,8 +84,10 @@ require('template/header.php');
                   <label class="col-md-4 control-label">Lokasi Pengerjaan</label>
                   <div class="col-md-5">
                     <div id="map" style="height: 300px;"></div>
-                    <input type="hidden" name="latitude" id="latitude">
-                    <input type="hidden" name="longitude" id="longitude">
+                    <input type="hidden" required="" name="latitude" id="latitude">
+                    <input type="hidden" required="" name="longitude" id="longitude">
+                    <small class="text-secondary"><i>*Klik map untuk memilih lokasi.</i></small><br>
+                    <a href="#" class="btn btn-default btn-sm m-t-5" id="location"><i class="fa fa-map-marker"></i>&nbsp;&nbsp;Pilih Lokasi Sekarang</a>
                   </div>
                 </div>
                 <div class="form-group">
