@@ -29,4 +29,10 @@ function add_data($table, $data) {
 	return $response;
 }
 
+function update_data($table, $data) {
+	global $conn;
+
+	
+}
+
 ?>

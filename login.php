@@ -26,7 +26,7 @@ if (isset($_POST['login'])) {
     } else {
         $timrow = mysqli_query($conn, "SELECT * FROM tb_anggota WHERE username = '$username'");
         $get = mysqli_fetch_assoc($timrow);
-        if ($get) {
+        if ($get && $get['status'] == 'active') {
             $get_password = $get['password'];
             $get_id = $get['id'];
             if (password_verify($password, $get_password)) {
@@ -86,7 +86,7 @@ if (isset($_POST['login'])) {
                     <div class="col-xs-12">
                         <input class="form-control" type="text" required="" placeholder="Username" name="username">
                         <?php if ($err_user == true) { ?>
-                            <div class="text-danger">Username tidak ditemukan</div>  
+                            <div class="text-danger">Username tidak ditemukan atau belum aktif</div>  
                         <?php } ?>
                     </div>
                 </div>

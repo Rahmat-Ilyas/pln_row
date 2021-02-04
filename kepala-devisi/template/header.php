@@ -117,7 +117,7 @@ if (!isset($_SESSION['login_kldevis'])) header("location: ../login.php");
                 </li>
 
                 <li class="has_sub">
-                  <a href="javascript:void(0);" class="waves-effect"><i class="ti-id-badge"></i> <span> Data Anggota </span> </a>
+                  <a href="data-anggota.php" class="waves-effect"><i class="ti-id-badge"></i> <span> Data Anggota </span> </a>
                 </li>
 
               </ul>
