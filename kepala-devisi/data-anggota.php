@@ -6,7 +6,7 @@ $result = mysqli_query($conn, "SELECT * FROM tb_anggota");
 if (isset($_POST['submit'])) {
   $id = $_POST['id'];
   $status = $_POST['status'];
-  if (isset($_POST['password'])) {
+  if ($_POST['password'] != '') {
     $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
     $query = "UPDATE tb_anggota SET status='$status', password='$password' WHERE id='$id'";
   } else {
@@ -88,7 +88,7 @@ if (isset($_POST['submit'])) {
                         <span class="label label-table label-<?= $color ?>"><?= $status ?></span>
                       </td>
                       <td style="width: 100px;">
-                        <a href="#" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-edit"><i class="fa fa-user"></i>&nbsp; Update Akun</a>
+                        <a href="#" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-edit<?= $dta['id'] ?>"><i class="fa fa-user"></i>&nbsp; Update Akun</a>
                       </td>
                     </tr>
                   <?php } ?>
@@ -104,7 +104,7 @@ if (isset($_POST['submit'])) {
 
 <?php foreach ($result as $dta) { ?>
   <!-- MODAL EDIT -->
-  <div class="modal fade" tabindex="-1" role="dialog" id="modal-edit">
+  <div class="modal fade" tabindex="-1" role="dialog" id="modal-edit<?= $dta['id'] ?>">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -120,8 +120,10 @@ if (isset($_POST['submit'])) {
               <div class="col-sm-9">
                 <input type="hidden" name="id" value="<?= $dta['id'] ?>">
                 <select class="form-control" name="status">
-                  <?php foreach ($set_status as $sts) { ?>
-                    <option value="<?= $sts[0] ?>" <?php if ($dta['status'] == $sts[0]) echo "selected"; ?>><?= $sts[1] ?></option>
+                  <?php foreach ($set_status as $sts) { 
+                    if ($dta['status'] == $sts[0]) $select = 'selected';
+                    else $select = ''; ?>
+                    <option value="<?= $sts[0] ?>" <?= $select ?>><?= $sts[1] ?></option>
                   <?php } ?>
                 </select>
               </div>

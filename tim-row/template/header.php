@@ -6,6 +6,9 @@ $anggota_id = $_SESSION['anggota_id'];
 
 $radius = mysqli_query($conn, "SELECT * FROM tb_radius");
 $rds = mysqli_fetch_assoc($radius);
+
+$anggota = mysqli_query($conn, "SELECT * FROM tb_anggota WHERE id='$anggota_id'");
+$agt = mysqli_fetch_assoc($anggota);
 ?>
 <!DOCTYPE html>
 <html>
@@ -50,10 +53,14 @@ $rds = mysqli_fetch_assoc($radius);
         <div class="menu-extras">
           <ul class="nav navbar-nav navbar-right pull-right">
             <li class="dropdown top-menu-item-xs">
-              <a href="" class="dropdown-toggle profile waves-effect waves-light" data-toggle="dropdown" aria-expanded="true"><img src="assets/images/users/avatar-1.jpg" alt="user-img" class="img-circle"> </a>
+              <a href="" class="dropdown-toggle profile waves-effect waves-light" data-toggle="dropdown" aria-expanded="true">
+                <span style="font-size: 15px; margin-right: 2px;"><b><?= $agt['nama'] ?></b></span>
+                <img src="../assets/images/anggota/<?= $agt['foto'] ?>" alt="user-img" class="img-circle">
+              </a>
               <ul class="dropdown-menu">
-                <li><a href="javascript:void(0)"><i class="ti-user m-r-10 text-custom"></i> Profile</a></li>
+                <li><h4 style="margin-left: 20px;"><?= $agt['nama'] ?></h4></li>
                 <li class="divider"></li>
+                <li><a href="javascript:void(0)"><i class="ti-user m-r-10 text-custom"></i> Profile</a></li>
                 <li><a href="../logout.php"><i class="ti-power-off m-r-10 text-danger"></i> Logout</a></li>
               </ul>
             </li>
