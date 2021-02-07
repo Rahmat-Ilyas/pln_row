@@ -91,11 +91,19 @@ $agt = mysqli_fetch_assoc($anggota);
             </li>
 
             <li class="has-submenu">
-              <a href="pengerjaan-baru.php" class="waves-effect"><i class=" fa fa-calendar-plus-o"></i> <span> Pengerjaan Baru</span></a>
+              <a href="#"><i class="fa fa-suitcase"></i>Data Pengerjaan</a>
+              <ul class="submenu">
+                <li>
+                  <a href="pengerjaan-baru.php">Pengerjaan Baru</a>
+                </li>
+                <li>
+                  <a href="data-pengerjaan.php">Data Pengerjaan</a>
+                </li>
+              </ul>
             </li>
 
             <li class="has-submenu">
-              <a href="data-pengerjaan.php" class="waves-effect"><i class="fa fa-calendar"></i> <span> Data Pengerjaan </span> </a>
+              <a href="#" class="waves-effect"><i class="fa fa-wrench"></i>Data Kegiatan</a>
             </li>
 
             <li class="has-submenu">
