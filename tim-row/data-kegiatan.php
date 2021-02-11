@@ -3,6 +3,7 @@ require('template/header.php');
 $pngrjaan = mysqli_query($conn, "SELECT * FROM tb_pengerjaan WHERE anggota_id='$anggota_id'");
 
 if (isset($_POST['addKegiatan'])) {
+  $_POST['waktu_mulai'] = $_POST['tgl_mulai'].' '.$_POST['jam_mulai'];
   $_POST['status'] = 'new';
   $res = add_data('tb_kegiatan', $_POST);
 }
@@ -13,13 +14,13 @@ if (isset($_POST['addKegiatan'])) {
     <!-- Page-Title -->
     <div class="row">
       <div class="col-sm-12">
-        <h4 class="page-title">Data Pengerjaan</h4>
+        <h4 class="page-title">Data Kegiatan</h4>
         <ol class="breadcrumb">
           <li>
-            <a href="#">Pengerjaan</a>
+            <a href="#">Kegiatan</a>
           </li>
           <li class="active">
-            Data Pengerjaan
+            Data Kegiatan
           </li>
         </ol>
       </div>
@@ -27,95 +28,91 @@ if (isset($_POST['addKegiatan'])) {
     <div class="row">
       <div class="col-sm-12">
         <div class="card-box table-responsive">
-          <h4 class="m-t-0 header-title"><b>Data Pengerjaan (01 Feb - 02 Mar)</b></h4>
+          <h4 class="m-t-0 header-title"><b>Data Kegiatan (01 Feb - 02 Mar)</b></h4>
+          <a href="#" class="m-t-10 btn btn-default add-kegiatan" data-toggle="modal" data-target="#modal-add-kegiatan" data-toggle1="tooltip" title="" data-original-title="Tambah Kegiatan Pengerjaan" data-id="<?= $dta['id'] ?>"><i class="md-my-library-add"></i> Tambah Kegiatan</a>
+
           <hr>
 
-          <div class="row">
-            <?php $no = 1; foreach ($pngrjaan as $dta) {
-              // Priode
-              $tggl_mulai = new DateTime($dta['tggl_mulai']);
-              $tggl_selesai = new DateTime($dta['tggl_selesai']);
-              $tggl = $tggl_mulai->diff($tggl_selesai)->days;
-              if ($tggl >= 25) $priode = 'Bulanan';
-              else if ($tggl >= 6) $priode = 'Mingguan';
-              else if ($tggl >= 0) $priode = 'Harian';
-              // Total Kegiatan
-              $pengerjaan_id = $dta['id'];
-              $kegiatan = mysqli_query($conn, "SELECT * FROM tb_kegiatan WHERE pengerjaan_id='$pengerjaan_id'");
-              $total_kegiatan = mysqli_num_rows($kegiatan);
-              // Status
-              if (date('Y-m-d', strtotime($dta['tggl_selesai'])) >= date('Y-m-d')) {
-                $sts_krj = 'Sedang Belangsung';
-                $clr_sts = 'success';
-              } else {
-                $sts_krj = 'Telah Berakhir';
-                $clr_sts = 'danger';
-              } ?>
-              <div class="col-lg-6">
-                <div class="portlet">
-                  <div class="portlet-heading bg-primary">
-                    <h3 class="portlet-title">
-                      Data Pengerjaan <?= $no ?>
-                    </h3>
-                    <div class="portlet-widgets">
-                      <a href="javascript:;" data-toggle="reload"><i class="ion-refresh"></i></a>
-                      <span class="divider"></span>
-                      <a data-toggle="collapse" data-parent="#accordion1" href="#bg-primary<?= $no ?>"><i class="ion-minus-round"></i></a>
-                    </div>
-                    <div class="clearfix"></div>
-                  </div>
-                  <div id="bg-primary<?= $no ?>" class="panel-collapse collapse in">
-                    <div class="portlet-body">
-                      <div class="row">
-                        <b class="col-sm-4">Komponen </b>
-                        <span class="col-sm-8">: 
-                          <span id="get-formulir"><?= $dta['formulir'] ?></span>
-                        </span>
-                      </div>
-                      <div class="row">
-                        <b class="col-sm-4">Nomor Tiang </b>
-                        <span class="col-sm-8">: 
-                          <span id="get-tiang"><?= $dta['nomor_tiang'] ?></span>
-                        </span>
-                      </div>
-                      <div class="row">
-                        <b class="col-sm-4">Waktu/Priode </b>
-                        <span class="col-sm-8">: <?= date('d M', strtotime($dta['tggl_mulai'])).' - '.date('d M', strtotime($dta['tggl_selesai'])) ?> (<?= $priode ?>)</span>
-                      </div>
-                      <div class="row">
-                        <b class="col-sm-4">Lokasi </b>
-                        <span class="col-sm-8">: <?= $dta['lokasi'] ?></span>
-                      </div>
-                      <div class="row">
-                        <b class="col-sm-4">Total Kegiatan </b>
-                        <span class="col-sm-8">: <?= $total_kegiatan ?> Kegiatan</span>
-                      </div>
-                      <div class="row">
-                        <b class="col-sm-4">Keterangan </b>
-                        <span class="col-sm-8">: <?= $dta['keterangan'] ?></span>
-                      </div>
-                      <div class="row">
-                        <b class="col-sm-4">Sataus </b>
-                        <span class="col-sm-8">: <span class="label label-table label-<?= $clr_sts ?>"><?= $sts_krj ?></span></span>
-                      </div>
-                      <hr>
-                      <div class="row">
-                        <div class="col-md-6 m-b-10">
-                          <?php if ($sts_krj == 'Telah Berakhir') { ?>
-                            <a href="#" class="btn btn-sm btn-block btn-success kegiatan-exp" data-toggle1="tooltip" title="" data-original-title="Tambah Kegiatan Pengerjaan"><i class="md-my-library-add"></i> Tambah Kegiatan</a>
-                          <?php } else { ?>
-                            <a href="#" class="btn btn-sm btn-block btn-success add-kegiatan" data-toggle="modal" data-target="#modal-add-kegiatan" data-toggle1="tooltip" title="" data-original-title="Tambah Kegiatan Pengerjaan" data-id="<?= $dta['id'] ?>"><i class="md-my-library-add"></i> Tambah Kegiatan</a>
-                          <?php } ?>
-                        </div>                       
-                        <div class="col-md-6">
-                          <a href="#" class="btn btn-sm btn-block btn-info" data-toggle="modal" data-target="#modal-detail<?= $dta['id'] ?>" data-toggle1="tooltip" title="" data-original-title="Detail Pengerjaan"><i class="md-assignment"></i> Detail Pengerjaan</a>
+          <ul class="nav nav-tabs tabs">
+            <li class="active tab">
+              <a href="#home-2" data-toggle="tab" aria-expanded="false"> 
+                <span class="visible-xs"><i class="fa fa-home"></i></span> 
+                <span class="hidden-xs"><i class="md-new-releases"></i> Kegiatan Baru</span> 
+              </a> 
+            </li> 
+            <li class="tab"> 
+              <a href="#profile-2" data-toggle="tab" aria-expanded="false"> 
+                <span class="visible-xs"><i class="fa fa-user"></i></span> 
+                <span class="hidden-xs"><i class="md-timelapse"></i> Sedang Diproses</span> 
+              </a> 
+            </li> 
+            <li class="tab"> 
+              <a href="#messages-2" data-toggle="tab" aria-expanded="true"> 
+                <span class="visible-xs"><i class="fa fa-envelope-o"></i></span> 
+                <span class="hidden-xs"><i class="md-play-install"></i> Selesai Diproses</span> 
+              </a> 
+            </li>
+          </ul> 
+          <div class="tab-content"> 
+            <div class="tab-pane active" id="home-2"> 
+              <div class="row">
+                <?php $no = 1; foreach ($pngrjaan as $dta) {
+                  $pengerjaan_id = $dta['id'];
+                  $kegiatan = mysqli_query($conn, "SELECT * FROM tb_kegiatan WHERE pengerjaan_id='$pengerjaan_id' AND status='new'");
+                  foreach ($kegiatan as $kgt) {  ?>
+                    <div class="col-lg-6">
+                      <div class="portlet">
+                        <div class="portlet-heading bg-primary">
+                          <h3 class="portlet-title">
+                            Data Kegiatan <?= $no ?>
+                          </h3>
+                          <div class="portlet-widgets">
+                            <a href="javascript:;" data-toggle="reload"><i class="ion-refresh"></i></a>
+                            <span class="divider"></span>
+                            <a data-toggle="collapse" data-parent="#accordion1" href="#bg-primary<?= $no ?>"><i class="ion-minus-round"></i></a>
+                          </div>
+                          <div class="clearfix"></div>
+                        </div>
+                        <div id="bg-primary<?= $no ?>" class="panel-collapse collapse in">
+                          <div class="portlet-body">
+                            <div class="row">
+                              <b class="col-sm-4">Komponen </b>
+                              <span class="col-sm-8">: <?= $dta['formulir'] ?></span>
+                            </div>
+                            <div class="row">
+                              <b class="col-sm-4">Nomor Tiang </b>
+                              <span class="col-sm-8">: <?= $dta['nomor_tiang'] ?></span>
+                            </div>
+                            <div class="row">
+                              <b class="col-sm-4">Keterangan </b>
+                              <span class="col-sm-8">: <?= $dta['keterangan'] ?></span>
+                            </div>
+                            <div class="row">
+                              <b class="col-sm-4">Sasaran </b>
+                              <span class="col-sm-8">: <?= $kgt['sasaran'] ?></span>
+                            </div>
+                            <div class="row">
+                              <b class="col-sm-4">Waktu Mulai</b>
+                              <span class="col-sm-8">: <?= date('d/m/y H:i', strtotime($kgt['waktu_mulai'])) ?></span>
+                            </div>
+                            <hr>
+                            <a href="#" class="btn btn-success add-kegiatan" data-toggle="modal" data-target="#modal-add-kegiatan" data-toggle1="tooltip" title="" data-original-title="Upload Foto Kegiatan Untuk Menyelesaikan" data-id="<?= $dta['id'] ?>"><i class="md-camera-alt"></i> Upload Foto & Selesaikan</a>
+                          </div>
                         </div>
                       </div>
                     </div>
-                  </div>
+                    <?php $no=$no+1; }
+                  } ?>
                 </div>
+              </div> 
+              <div class="tab-pane" id="profile-2">
+                <p>Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt.Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim.</p> 
+                <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim.</p> 
+              </div> 
+              <div class="tab-pane" id="messages-2">
+                <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim.</p> 
+                <p>Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt.Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim.</p> 
               </div>
-              <?php $no=$no+1; } ?>
             </div>
           </div>
         </div>
@@ -138,21 +135,23 @@ if (isset($_POST['addKegiatan'])) {
               <input type="hidden" name="pengerjaan_id" id="pengerjaan-id">
               <div class="row">
                 <div class="col-sm-4">
-                  <input type="text" class="form-control" required="" value="<?= date('d/m/Y H:i') ?>" readonly="">
-                  <input type="hidden" class="form-control" required="" name="waktu_mulai" id="waktu_mulai">
+                  <input type="date" class="form-control" required=""name="tgl_mulai" value="<?= date('Y-m-d') ?>" readonly="">
+                </div>
+                <div class="col-sm-3">
+                  <input type="time" class="form-control" required=""name="jam_mulai" value="<?= date('H:i') ?>" readonly="">
                 </div>
               </div>
             </div>
             <div class="form-group">
               <label class="col-form-label">Komponen/Formulir</label>
-              <div class="row">
-                <div class="col-sm-8">
-                  <input type="text" class="form-control" required="" id="set-formulir" readonly="">
-                </div>
-                <div class="col-sm-4">
-                  <input type="text" class="form-control" required="" id="set-tiang" readonly="">
-                </div>
-              </div>
+              <select class="form-control" id="select-formulir">
+                <option>--Pilih Kompoen/Formulir--</option>
+                <?php foreach ($pngrjaan as $pkr) {
+                  if (date('Y-m-d', strtotime($pkr['tggl_selesai'])) >= date('Y-m-d')) { ?>
+                    <option value="<?= $pkr['id'] ?>"><?= $pkr['formulir'].' (Nomor Tiang: '.$pkr['nomor_tiang'].')' ?></option>
+                  <?php }
+                } ?>
+              </select>
             </div>
             <div class="form-group">
               <label class="col-form-label">Sasaran Pemeriksaan</label>
@@ -252,6 +251,10 @@ if (isset($_POST['addKegiatan'])) {
                     $status = 'Sedang Diproses';
                     $color = 'info';
                     $ket = 'Belum ada rating';
+                  } else if ($kgt['status'] == 'revisi') {
+                    $status = 'Direvisi';
+                    $color = 'warning';
+                    $ket = 'Belum ada rating';
                   } else if ($kgt['status'] == 'accept') {
                     $status = 'Selesai Diproses';
                     $color = 'success';
@@ -302,22 +305,12 @@ if (isset($_POST['addKegiatan'])) {
       $(document).ready(function($) {
         $('.add-kegiatan').click(function() {
           var id = $(this).attr('data-id');
-          var formulir = $(this).parents('.portlet-body').find('#get-formulir').text();
-          var tiang = $(this).parents('.portlet-body').find('#get-tiang').text();
+          var formulir = $(this).parents('tr').find('#get-formulir').text();
+          var tiang = $(this).parents('tr').find('#get-tiang').text();
 
           $('#pengerjaan-id').val(id);
           $('#set-formulir').val(formulir);
           $('#set-tiang').val('Nomor Tiang: '+tiang);
-
-          $('#waktu_mulai').val("<?= date('Y-m-d H:i') ?>");
-        });
-
-        $('.kegiatan-exp').click(function(e) {
-          Swal.fire({
-            title: 'Pengerjaan Telah Berakhir',
-            text: "Tidak dapat menambah kegiatan karena priode pengerjaan telah berakhir",
-            type: 'warning'
-          });
         });
 
         <?php if (isset($res) && $res['status'] == 'success') { ?>

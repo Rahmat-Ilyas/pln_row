@@ -3,11 +3,16 @@
 function add_data($table, $data) {
 	global $conn;
 	$get_field = mysqli_query($conn, "SHOW COLUMNS FROM $table");
-	$value[] = 'NULL';
+	$value = [];
 	foreach ($get_field as $dta) {
-		if (array_key_exists($dta['Field'], $data)) {
+		if ($dta['Field'] == 'id') {
+			$value[] = "NULL";
+		} else if (array_key_exists($dta['Field'], $data)) {
 			$key = $dta['Field'];
 			$value[] = "'$data[$key]'";
+		} else {
+			if ($dta['Type'] == 'int') $value[] = "0";
+			else $value[] = "NULL";
 		}
 	}
 

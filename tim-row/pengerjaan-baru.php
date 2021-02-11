@@ -72,7 +72,7 @@ if (isset($_POST['submit'])) {
                 <div class="form-group">
                   <label class="col-md-4 control-label">Tanggal Mulai</label>
                   <div class="col-md-5">
-                    <input type="date" class="form-control" name="tggl_mulai" value="<?= date('Y-m-d') ?>" required="">
+                    <input type="date" class="form-control" name="tggl_mulai" value="<?= date('Y-m-d') ?>" required="" readonly="">
                   </div>
                 </div>
 
