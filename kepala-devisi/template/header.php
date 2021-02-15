@@ -22,6 +22,10 @@ if (!isset($_SESSION['login_kldevis'])) header("location: ../login.php");
   <link href="../assets/css/pages.css" rel="stylesheet" type="text/css" />
   <link href="../assets/css/responsive.css" rel="stylesheet" type="text/css" />
 
+  <!-- DataTables -->
+  <link href="../assets/plugins/datatables/jquery.dataTables.min.css" rel="stylesheet" type="text/css"/>
+  <link href="../assets/plugins/datatables/buttons.bootstrap.min.css" rel="stylesheet" type="text/css"/>
+
   <!-- HTML5 Shiv and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
         <!--[if lt IE 9]>
@@ -101,15 +105,15 @@ if (!isset($_SESSION['login_kldevis'])) header("location: ../login.php");
                 </li>
 
                 <li class="has_sub">
-                  <a href="javascript:void(0);" class="waves-effect"><i class="ti-star"></i><span> Rating Pengerjaan</span> </a>
+                  <a href="javascript:void(0);" class="waves-effect"><i class="fa fa-file-text-o"></i><span> Kelola Laporan </span> <span class="menu-arrow"></span></a>
+                  <ul class="list-unstyled">
+                    <li><a href="ui-buttons.html">Cetak Laporan</a></li>
+                    <li><a href="ui-loading-buttons.html">Arsip Laporan</a></li>
+                  </ul>
                 </li>
 
                 <li class="has_sub">
-                  <a href="javascript:void(0);" class="waves-effect"><i class="fa fa-file-text-o"></i><span> Laporan </span> </a>
-                </li>
-
-                <li class="has_sub">
-                  <a href="javascript:void(0);" class="waves-effect"><i class="fa fa-calendar"></i><span> Priode Laporan </span> </a>
+                  <a href="priode-laporan.php" class="waves-effect"><i class="fa fa-calendar"></i><span> Priode Laporan </span> </a>
                 </li>
 
                 <li class="has_sub">

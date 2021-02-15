@@ -1,6 +1,6 @@
 <?php 
 require('template/header.php');
-$pngrjaan = mysqli_query($conn, "SELECT * FROM tb_pengerjaan WHERE anggota_id='$anggota_id'");
+$pngrjaan = mysqli_query($conn, "SELECT * FROM tb_pengerjaan WHERE anggota_id='$anggota_id' ORDER BY id DESC");
 
 if (isset($_POST['addKegiatan'])) {
   $_POST['status'] = 'new';
@@ -115,7 +115,10 @@ if (isset($_POST['addKegiatan'])) {
                   </div>
                 </div>
               </div>
-              <?php $no=$no+1; } ?>
+              <?php $no=$no+1; }
+              if ($no == 1) { ?>
+                <h4 class="text-center"><i>Tidak ada data</i></h4>
+              <?php } ?>
             </div>
           </div>
         </div>
@@ -137,7 +140,7 @@ if (isset($_POST['addKegiatan'])) {
               <label class="col-form-label">Waktu Mulai (Defaut)</label>
               <input type="hidden" name="pengerjaan_id" id="pengerjaan-id">
               <div class="row">
-                <div class="col-sm-4">
+                <div class="col-sm-5">
                   <input type="text" class="form-control" required="" value="<?= date('d/m/Y H:i') ?>" readonly="">
                   <input type="hidden" class="form-control" required="" name="waktu_mulai" id="waktu_mulai">
                 </div>
@@ -146,7 +149,7 @@ if (isset($_POST['addKegiatan'])) {
             <div class="form-group">
               <label class="col-form-label">Komponen/Formulir</label>
               <div class="row">
-                <div class="col-sm-8">
+                <div class="col-sm-8 m-b-5">
                   <input type="text" class="form-control" required="" id="set-formulir" readonly="">
                 </div>
                 <div class="col-sm-4">

@@ -36,10 +36,13 @@
 <!-- Data Table -->
 <script src="../assets/plugins/datatables/jquery.dataTables.min.js"></script>
 <script src="../assets/plugins/datatables/dataTables.bootstrap.js"></script>
-
 <script src="../assets/plugins/datatables/dataTables.buttons.min.js"></script>
 <script src="../assets/plugins/datatables/buttons.bootstrap.min.js"></script>
+
 <script src="../assets/plugins/sweetalert2/sweetalert2.all.min.js"></script>
+
+<!-- Page Specific JS Libraries -->
+<script src="../assets/plugins/dropzone/dropzone.js"></script>
 
 <!-- Google Maps -->
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBhUwwpTQamL6ZhPKT2x2j2nI-eWNR8bZ0&callback=initialize&libraries=&v=weekly"

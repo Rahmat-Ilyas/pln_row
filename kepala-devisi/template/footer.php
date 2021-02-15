@@ -27,6 +27,11 @@
 <script src="../assets/js/jquery.nicescroll.js"></script>
 <script src="../assets/js/jquery.scrollTo.min.js"></script>
 
+<!-- Data Table -->
+<script src="../assets/plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="../assets/plugins/datatables/dataTables.bootstrap.js"></script>
+<script src="../assets/plugins/datatables/dataTables.buttons.min.js"></script>
+<script src="../assets/plugins/datatables/buttons.bootstrap.min.js"></script>
 
 <script src="../assets/js/jquery.core.js"></script>
 <script src="../assets/js/jquery.app.js"></script>
@@ -38,7 +43,7 @@ defer></script>
 <script>
 	$(document).ready(function() {
 		$('[data-toggle1="tooltip"]').tooltip();
-		// $('#datatable').dataTable();
+		$('#datatable').dataTable();
 	});
 </script>
 

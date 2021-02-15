@@ -1,5 +1,17 @@
 <?php 
 require('template/header.php');
+
+$pgr_all = mysqli_query($conn, "SELECT * FROM tb_pengerjaan");
+$ttl_pgr = mysqli_num_rows($pgr_all);
+
+$kgt_all = mysqli_query($conn, "SELECT * FROM tb_kegiatan");
+$ttl_kgt = mysqli_num_rows($kgt_all);
+
+$agt_all = mysqli_query($conn, "SELECT * FROM tb_anggota WHERE status='active'");
+$ttl_agt = mysqli_num_rows($agt_all);
+
+$get_plap = mysqli_query($conn, "SELECT * FROM tb_priode_laporan ORDER BY id DESC");
+$prd_lap = mysqli_fetch_assoc($get_plap);
 ?>
 <!-- Start content -->
 <div class="content">
@@ -22,6 +34,44 @@ require('template/header.php');
             </ol>
           </div>
         </div>
+        
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="card-box widget-inline">
+              <div class="row">
+                <div class="col-lg-3 col-sm-6">
+                  <div class="widget-inline-box text-center">
+                    <h3><i class="text-primary fa fa-suitcase"></i> <b data-plugin="counterup"><?= $ttl_pgr ?></b></h3>
+                    <h4 class="text-muted">Total Pengerjaan</h4>
+                  </div>
+                </div>
+
+                <div class="col-lg-3 col-sm-6">
+                  <div class="widget-inline-box text-center">
+                    <h3><i class="text-custom fa fa-wrench"></i> <b data-plugin="counterup"><?= $ttl_kgt ?></b></h3>
+                    <h4 class="text-muted">Total Kegiatan</h4>
+                  </div>
+                </div>
+
+                <div class="col-lg-3 col-sm-6">
+                  <div class="widget-inline-box text-center">
+                    <h3><i class="text-pink fa fa-users"></i> <b data-plugin="counterup"><?= $ttl_agt ?></b></h3>
+                    <h4 class="text-muted">Jumlah Anggota</h4>
+                  </div>
+                </div>
+
+                <div class="col-lg-3 col-sm-6">
+                  <div class="widget-inline-box text-center b-0">
+                    <h3><i class="text-purple fa fa-calendar"></i> <b data-plugin="counterup"><?= date('d/m/y', strtotime($prd_lap['tanggal_stor'])) ?></b></h3>
+                    <h4 class="text-muted">Laporan Diserahkan</h4>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+
         <div class="row">
           <div class="col-sm-12">
             <div class="card-box">

@@ -9,6 +9,16 @@ $rds = mysqli_fetch_assoc($radius);
 
 $anggota = mysqli_query($conn, "SELECT * FROM tb_anggota WHERE id='$anggota_id'");
 $agt = mysqli_fetch_assoc($anggota);
+
+$new_kgt = 0;
+$gpkj = mysqli_query($conn, "SELECT * FROM tb_pengerjaan WHERE anggota_id='$anggota_id'");
+foreach ($gpkj as $x) {
+  $pengerjaan_id = $x['id'];
+  $kgit = mysqli_query($conn, "SELECT * FROM tb_kegiatan WHERE pengerjaan_id='$pengerjaan_id' AND status='new'");
+  foreach ($kgit as $kg) {
+    $new_kgt=$new_kgt+1;
+  }
+}
 ?>
 <!DOCTYPE html>
 <html>
@@ -33,6 +43,9 @@ $agt = mysqli_fetch_assoc($anggota);
   <!-- DataTables -->
   <link href="../assets/plugins/datatables/jquery.dataTables.min.css" rel="stylesheet" type="text/css"/>
   <link href="../assets/plugins/datatables/buttons.bootstrap.min.css" rel="stylesheet" type="text/css"/>
+
+  <!-- Dropzone css -->
+  <link href="../assets/plugins/dropzone/dropzone.css" rel="stylesheet" type="text/css" />
 
   <script src="assets/js/modernizr.min.js"></script>
 
@@ -102,15 +115,17 @@ $agt = mysqli_fetch_assoc($anggota);
             </li>
 
             <li class="has-submenu">
-              <a href="data-kegiatan.php" class="waves-effect"><i class="fa fa-wrench"></i>Data Kegiatan</a>
+              <a href="data-kegiatan.php" class="waves-effect">
+                <i class="fa fa-wrench">
+                  <?php if ($new_kgt > 0) { ?>
+                    <span class="badge badge-xs badge-danger" style="font-size: 11px;"><?= $new_kgt ?></span>
+                  <?php } ?>
+                </i>Data Kegiatan
+              </a>
             </li>
 
             <li class="has-submenu">
               <a href="riwayat-pengerjaan.php" class="waves-effect"><i class="fa fa-history"></i> <span> Riwayat Pengerjaan </span> </a>
-            </li>
-
-            <li class="has-submenu">
-              <a href="rating-pengerjaan.php" class="waves-effect"><i class="ti-star"></i><span> Rating </span> </a>
             </li>
 
           </ul>

@@ -36,7 +36,7 @@ if (isset($_POST['submit'])) {
             <h4 class="page-title">Laporan Pengerjaan</h4>
             <ol class="breadcrumb">
               <li>
-                <a href="#">Pengerjaan</a>
+                <a href="#">Kepala Devisi</a>
               </li>
               <li class="active">
                 Laporan Pengerjaan

@@ -3,7 +3,6 @@ require('template/header.php');
 $pngrjaan = mysqli_query($conn, "SELECT * FROM tb_pengerjaan WHERE anggota_id='$anggota_id'");
 
 if (isset($_POST['addKegiatan'])) {
-  $_POST['waktu_mulai'] = $_POST['tgl_mulai'].' '.$_POST['jam_mulai'];
   $_POST['status'] = 'new';
   $res = add_data('tb_kegiatan', $_POST);
 }
@@ -36,20 +35,35 @@ if (isset($_POST['addKegiatan'])) {
           <ul class="nav nav-tabs tabs">
             <li class="active tab">
               <a href="#home-2" data-toggle="tab" aria-expanded="false"> 
-                <span class="visible-xs"><i class="fa fa-home"></i></span> 
-                <span class="hidden-xs"><i class="md-new-releases"></i> Kegiatan Baru</span> 
+                <span class="visible-xs">
+                  <i class="md-new-releases"></i>
+                  <?php if ($new_kgt > 0) { ?>
+                    <span class="badge badge-danger" id="badge-delivery" style="font-size: 8px; margin-bottom: 15px;"><?= $new_kgt ?></span> 
+                  <?php } ?>
+                </span> 
+                <span class="hidden-xs"><i class="md-new-releases"></i> Kegiatan Baru
+                  <?php if ($new_kgt > 0) { ?>
+                    <span class="badge badge-danger" id="badge-delivery" style="font-size: 11px; margin-bottom: 10px;"><?= $new_kgt ?></span> 
+                  <?php } ?>
+                </span>
               </a> 
             </li> 
             <li class="tab"> 
               <a href="#profile-2" data-toggle="tab" aria-expanded="false"> 
-                <span class="visible-xs"><i class="fa fa-user"></i></span> 
+                <span class="visible-xs"><i class="md-timelapse"></i></span> 
                 <span class="hidden-xs"><i class="md-timelapse"></i> Sedang Diproses</span> 
               </a> 
             </li> 
             <li class="tab"> 
               <a href="#messages-2" data-toggle="tab" aria-expanded="true"> 
-                <span class="visible-xs"><i class="fa fa-envelope-o"></i></span> 
+                <span class="visible-xs"><i class="md-play-install"></i></span> 
                 <span class="hidden-xs"><i class="md-play-install"></i> Selesai Diproses</span> 
+              </a> 
+            </li>
+            <li class="tab"> 
+              <a href="#messages-2" data-toggle="tab" aria-expanded="true"> 
+                <span class="visible-xs"><i class="md-cancel"></i></span> 
+                <span class="hidden-xs"><i class="md-cancel"></i> Kegiatan Ditolak</span> 
               </a> 
             </li>
           </ul> 
@@ -96,13 +110,16 @@ if (isset($_POST['addKegiatan'])) {
                               <span class="col-sm-8">: <?= date('d/m/y H:i', strtotime($kgt['waktu_mulai'])) ?></span>
                             </div>
                             <hr>
-                            <a href="#" class="btn btn-success add-kegiatan" data-toggle="modal" data-target="#modal-add-kegiatan" data-toggle1="tooltip" title="" data-original-title="Upload Foto Kegiatan Untuk Menyelesaikan" data-id="<?= $dta['id'] ?>"><i class="md-camera-alt"></i> Upload Foto & Selesaikan</a>
+                            <a href="#" class="btn btn-success" id="btn-upload" data-toggle="modal" data-target="#modal-upload" data-toggle1="tooltip" title="" data-original-title="Upload Foto Kegiatan Untuk Menyelesaikan" data-id="<?= $kgt['id'] ?>"><i class="md-camera-alt"></i> Upload Foto & Selesaikan</a>
                           </div>
                         </div>
                       </div>
                     </div>
                     <?php $no=$no+1; }
-                  } ?>
+                  }
+                  if ($no == 1) { ?>
+                    <h4 class="text-center"><i>Tidak ada data</i></h4>
+                  <?php } ?>
                 </div>
               </div> 
               <div class="tab-pane" id="profile-2">
@@ -134,11 +151,9 @@ if (isset($_POST['addKegiatan'])) {
               <label class="col-form-label">Waktu Mulai (Defaut)</label>
               <input type="hidden" name="pengerjaan_id" id="pengerjaan-id">
               <div class="row">
-                <div class="col-sm-4">
-                  <input type="date" class="form-control" required=""name="tgl_mulai" value="<?= date('Y-m-d') ?>" readonly="">
-                </div>
-                <div class="col-sm-3">
-                  <input type="time" class="form-control" required=""name="jam_mulai" value="<?= date('H:i') ?>" readonly="">
+                <div class="col-sm-5">
+                  <input type="text" class="form-control" required="" value="<?= date('d/m/Y H:i') ?>" readonly="">
+                  <input type="hidden" class="form-control" required="" name="waktu_mulai" id="waktu_mulai">
                 </div>
               </div>
             </div>
@@ -166,6 +181,36 @@ if (isset($_POST['addKegiatan'])) {
       </div>
     </div>
   </div>
+
+  <!-- modal upload -->
+  <div class="modal" id="modal-upload" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+          <h4 class="modal-title" id="myLargeModalLabel">Upload Foto Kegiatan</h4>
+        </div>
+        <div class="modal-body" style="padding: 20px 50px 0 50px">
+          <form method="POST" action="#" id="formUpload" enctype="multipart/form-data">
+            <div class="form-group">
+              <label class="col-form-label">Foto Pengerjaan</label>
+              <div class="dropzone dropzone-previews" id="my-awesome-dropzone"></div>
+              <input type="hidden" name="kegiatan_id" id="kegiatan_id">
+            </div>
+            <div class="form-group">
+              <label class="col-form-label">Total Kerusakan</label>
+              <input type="number" name="total_kerusakan" id="total_kerusakan" class="form-control" required="" placeholder="Total Kerusakan...">
+            </div>
+            <div class="form-group">
+              <button type="submit" name="addKegiatan" class="btn btn-default">Upload & Selesaikan</button>
+              <button type="" class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Batal</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
 
   <?php foreach ($pngrjaan as $dta) { 
     // Priode
@@ -302,15 +347,111 @@ if (isset($_POST['addKegiatan'])) {
     require('template/footer.php');
     ?>
     <script type="text/javascript">
+      Dropzone.autoDiscover = false;
       $(document).ready(function($) {
         $('.add-kegiatan').click(function() {
-          var id = $(this).attr('data-id');
-          var formulir = $(this).parents('tr').find('#get-formulir').text();
-          var tiang = $(this).parents('tr').find('#get-tiang').text();
+          $('#waktu_mulai').val("<?= date('Y-m-d H:i') ?>");
+        });
 
+        $('#select-formulir').change(function(event) {
+          var id = $(this).val();
           $('#pengerjaan-id').val(id);
-          $('#set-formulir').val(formulir);
-          $('#set-tiang').val('Nomor Tiang: '+tiang);
+        });
+
+        $('#btn-upload').click(function(event) {
+          Dropzone.forElement(".dropzone-previews").removeAllFiles(true);
+          formData = new FormData();
+          chek = 0;
+
+          var id = $(this).attr('data-id');
+          $('#kegiatan_id').val(id);
+        });
+
+        var formData = new FormData();
+        var chek = 0;
+
+        $(".dropzone-previews").dropzone({ 
+          url: "../controller.php",
+          paramName: 'file',
+          maxFilesize: 20,
+          maxFiles: 1,
+          timeout: 60000*120,
+          acceptedFiles: 'image/*',
+          dictDefaultMessage: 'Klik untuk memilih foto',
+          addRemoveLinks: true,
+          dictRemoveFile: '<a href="#" class="btn btn-link btn-sm"><i class="fa fa-trash"></i> Hapus</a>',
+          accept: function(file, done) {
+            if (file) {
+              console.log(file);
+
+              var dt = new Date(file.lastModifiedDate);
+              var month = dt.getMonth()+1;
+              var date = dt.getDate();
+              var year = dt.getFullYear();
+              var hours = dt.getHours();
+              var minutes = dt.getMinutes();
+              var seconds = dt.getSeconds();
+              if (month < 10) month = '0'+month;
+              if (dt.getDate() < 10) date = '0'+dt.getDate();
+              var tanggal = year+'-'+month+'-'+date+' '+hours+':'+minutes+':'+seconds;
+
+              formData.append('foto_kegiatan', file);
+              formData.append('tggl_foto', tanggal);
+              chek = chek + 1;
+            }
+            done();
+          },
+          error: function(file, error) {
+            Swal.fire({
+              title: 'Terjadi Kesalahan',
+              text: error,
+              type: 'error'
+            });
+            $(file.previewElement).remove();
+          },
+          removedfile: function(file) {
+            $(file.previewElement).remove();
+            formData = new FormData();
+            chek = 0;
+          }
+
+        });
+
+        $('#formUpload').submit(function(event) {
+          event.preventDefault();
+
+          if (chek == 0) {
+            Swal.fire({
+              title: 'Belum Ada File!',
+              text: 'Pastikan anda telah melampirkan foto',
+              type: 'warning'
+            });
+            return
+          }
+
+          formData.append('req', 'uploadFoto');        
+          formData.append('kegiatan_id', $('#kegiatan_id').val());        
+          formData.append('total_kerusakan', $('#total_kerusakan').val());
+
+          $.ajax({
+            url     : '../controller.php',
+            method  : "POST",
+            data    : formData,
+            contentType : false,
+            processData: false,
+            success : function(data) {
+              console.log(data);
+              Swal.fire({
+                title: data.title,
+                text: data.message,
+                type: data.status
+              }).then(function() {
+                if (data.status == 'success') {
+                  location.href= 'data-kegiatan.php';
+                }
+              });
+            }
+          });      
         });
 
         <?php if (isset($res) && $res['status'] == 'success') { ?>
@@ -319,7 +460,7 @@ if (isset($_POST['addKegiatan'])) {
             text: "<?= $res['message'] ?>",
             type: 'success'
           }).then(function() {
-            location.href = 'data-pengerjaan.php';
+            location.href = 'data-kegiatan.php';
           });
         <?php } else if (isset($res) && $res['status'] == 'error') { ?>
           Swal.fire({
