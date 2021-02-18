@@ -72,7 +72,7 @@ foreach ($gpkj as $x) {
               <ul class="dropdown-menu">
                 <li><h4 style="margin-left: 20px;"><?= $agt['nama'] ?></h4></li>
                 <li class="divider"></li>
-                <li><a href="javascript:void(0)"><i class="ti-user m-r-10 text-custom"></i> Profile</a></li>
+                <li><a href="javascript:void(0)" data-toggle="modal" data-target="#modal-profile"><i class="ti-user m-r-10 text-custom"></i> Profile</a></li>
                 <li><a href="../logout.php"><i class="ti-power-off m-r-10 text-danger"></i> Logout</a></li>
               </ul>
             </li>
@@ -134,6 +134,92 @@ foreach ($gpkj as $x) {
     </div> <!-- end navbar-custom -->
   </header>
   <!-- End Navigation Bar-->
+
+  <!-- MODAL EDIT ALAT-->
+  <div class="modal" id="modal-profile" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+          <h4 class="modal-title" id="myLargeModalLabel">Profile</h4>
+        </div>
+        <div class="modal-body" style="padding: 20px 50px 0 50px">
+          <div id="view-profil">
+            <div class="profile-detail card-box">
+              <div>
+                <img src="../assets/images/anggota/<?= $agt['foto'] ?>" class="img-circle" alt="profile-image">
+                <h4 class="text-uppercase font-600 m-t-20"><?= $agt['nama'] ?></h4>
+                <h5 class="text-center">NIP: <?= $agt['nip'] ?></h5>
+                <hr>
+
+                <div class="text-left">
+                  <p class="text-muted font-13"><strong>Nama Lengkap:</strong> <span><?= $agt['nama'] ?></span></p>
+                  <p class="text-muted font-13"><strong>NIP:</strong> <span><?= $agt['nip'] ?></span></p>
+                  <p class="text-muted font-13"><strong>Telepon:</strong> <span><?= $agt['telepon'] ?></span></p>
+                  <p class="text-muted font-13"><strong>Username:</strong> <span><?= $agt['username'] ?></span></p>
+                </div>
+
+
+                <div class="button-list m-t-20">
+                  <button type="button" class="btn btn-success" id="btn-edit-profil"> <i class="fa fa-user"></i> Update Profile</button>
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal" aria-hidden="true"> <i class="fa fa-long-arrow-left"></i> Tutup</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div id="edit-profil" hidden="">
+            <form method="POST" action="#">
+              <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Nama Lengkap</label>
+                <div class="col-sm-8">
+                  <input type="hidden" name="id" value="<?= $agt['id'] ?>">
+                  <input type="text" class="form-control" required="" autocomplete="off" placeholder="Nama..." name="nama" value="<?= $agt['nama'] ?>">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-4 col-form-label">NIP</label>
+                <div class="col-sm-8">
+                  <input type="text" class="form-control" required="" autocomplete="off" placeholder="NIP..." name="nip" value="<?= $agt['nip'] ?>">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Telepon</label>
+                <div class="col-sm-8">
+                  <input type="number" class="form-control" required="" autocomplete="off" placeholder="Telepon..." name="telepon" value="<?= $agt['telepon'] ?>">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Foto</label>
+                <div class="col-sm-8">
+                  <input type="file" class="form-control" name="foto">
+                  <img src="../assets/images/anggota/<?= $agt['foto'] ?>" class="m-t-5" style="width: 25px;"> <span class="m-t-5">| <?= $agt['foto'] ?></span>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Username</label>
+                <div class="col-sm-8">
+                  <input type="text" class="form-control" required="" autocomplete="off" placeholder="Username..." name="username" value="<?= $agt['username'] ?>">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Password</label>
+                <div class="col-sm-8">
+                  <input type="text" class="form-control" autocomplete="off" placeholder="Masukkan pasword baru untuk mengupdate..." name="password">
+                </div>
+              </div>
+              <div class="form-group row">
+                <div class="col-sm-4"></div>
+                <div class="col-sm-8">
+                  <button type="submit" name="update_akun" class="btn btn-default" id="upload">Update</button>
+                  <a href="#" class="btn btn-primary" id="batal-update">Batal</a>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
 
   <div class="wrapper">

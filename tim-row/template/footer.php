@@ -175,6 +175,16 @@ defer></script>
 	$(document).ready(function() {
 		$('[data-toggle1="tooltip"]').tooltip();
 		$('#datatable').dataTable();
+
+		$('#btn-edit-profil').click(function(event) {
+			$('#edit-profil').removeAttr('hidden');
+			$('#view-profil').attr('hidden', '');
+		});
+
+		$('#batal-update').click(function(event) {
+			$('#edit-profil').attr('hidden', '');
+			$('#view-profil').removeAttr('hidden');
+		});
 	});
 </script>
 

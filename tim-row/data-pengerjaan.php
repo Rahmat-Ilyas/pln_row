@@ -1,6 +1,20 @@
 <?php 
 require('template/header.php');
+$priode = mysqli_query($conn, "SELECT * FROM tb_priode_laporan ORDER BY id DESC");
+$prd = mysqli_fetch_assoc($priode);
+
 $pngrjaan = mysqli_query($conn, "SELECT * FROM tb_pengerjaan WHERE anggota_id='$anggota_id' ORDER BY id DESC");
+
+$priode_mulai = strtotime($prd['tanggal_mulai']);
+$priode_akhir = strtotime($prd['tanggal_akhir']);
+$result = [];
+foreach ($pngrjaan as $pgr) {
+  $pgr_mulai = strtotime($pgr['tggl_mulai']);
+  $pgr_selesai = strtotime($pgr['tggl_selesai']);
+  if ($priode_mulai < $pgr_mulai && $priode_akhir > $pgr_mulai || $priode_mulai < $pgr_selesai && $priode_akhir > $pgr_selesai) {
+    $result[] = $pgr;
+  }
+}
 
 if (isset($_POST['addKegiatan'])) {
   $_POST['status'] = 'new';
@@ -27,11 +41,11 @@ if (isset($_POST['addKegiatan'])) {
     <div class="row">
       <div class="col-sm-12">
         <div class="card-box table-responsive">
-          <h4 class="m-t-0 header-title"><b>Data Pengerjaan (01 Feb - 02 Mar)</b></h4>
+          <h4 class="m-t-0 header-title"><b>Data Pengerjaan (Priode: <?= date('d M y', strtotime($prd['tanggal_mulai']))?> - <?= date('d M y', strtotime($prd['tanggal_akhir'])) ?>)</b></h4>
           <hr>
 
           <div class="row">
-            <?php $no = 1; foreach ($pngrjaan as $dta) {
+            <?php $no = 1; foreach ($result as $dta) {
               // Priode
               $tggl_mulai = new DateTime($dta['tggl_mulai']);
               $tggl_selesai = new DateTime($dta['tggl_selesai']);
@@ -171,7 +185,7 @@ if (isset($_POST['addKegiatan'])) {
     </div>
   </div>
 
-  <?php foreach ($pngrjaan as $dta) { 
+  <?php foreach ($result as $dta) { 
     // Priode
     $tggl_mulai = new DateTime($dta['tggl_mulai']);
     $tggl_selesai = new DateTime($dta['tggl_selesai']);
@@ -291,7 +305,12 @@ if (isset($_POST['addKegiatan'])) {
                       </a>
                     </td>
                   </tr>
-                  <?php $no=$no+1; } ?>
+                  <?php $no=$no+1; } 
+                  if ($no == 1) { ?>
+                    <tr>
+                      <td colspan="8" class="text-center"><i>Tidak ada kegiatan</i></td>
+                    </tr>
+                  <?php } ?>
                 </tbody>
               </table>
             </div>
