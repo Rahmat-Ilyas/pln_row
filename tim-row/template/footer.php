@@ -185,6 +185,22 @@ defer></script>
 			$('#edit-profil').attr('hidden', '');
 			$('#view-profil').removeAttr('hidden');
 		});
+
+		<?php if (isset($res_updt_akun) && $res_updt_akun['status'] == 'success') { ?>
+			Swal.fire({
+				title: 'Berhasil Diupdte',
+				text: "<?= $res_updt_akun['message'] ?>",
+				type: 'success'
+			}).then(function() {
+				location.href = window.location.pathname;;
+			});
+		<?php } else if (isset($res_updt_akun) && $res_updt_akun['status'] == 'error') { ?>
+			Swal.fire({
+				title: 'Terjadi Kesalahan',
+				text: "<?= $res_updt_akun['message'] ?>",
+				type: 'error'
+			});
+		<?php } ?>
 	});
 </script>
 

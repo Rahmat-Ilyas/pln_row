@@ -152,7 +152,7 @@ require('template/footer.php');
   $(document).ready(function($) {
     <?php if (isset($response) && $response['status'] == 'success') { ?>
       Swal.fire({
-        title: 'Berhasil Ditambah',
+        title: 'Berhasil Diupdte',
         text: "<?= $response['message'] ?>",
         type: 'success'
       }).then(function() {

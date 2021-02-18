@@ -19,6 +19,45 @@ foreach ($gpkj as $x) {
     $new_kgt=$new_kgt+1;
   }
 }
+
+// Update Akun Anggota 
+if (isset($_POST['update_akun'])) {
+  $id = $_POST['id'];
+  $nip = $_POST['nip'];
+  $nama = $_POST['nama'];
+  $telepon = $_POST['telepon'];
+  $username = $_POST['username'];
+  if ($_POST['password'])
+    $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+  else
+    $password = $agt['password'];
+
+  if ($_FILES['foto']['name'] != '') {
+    $nama_foto = $_FILES['foto']['name'];
+    $ext = pathinfo($nama_foto, PATHINFO_EXTENSION);
+    $foto = str_replace(' ', '-', $nama)."-".time().".".$ext;
+    $tmp = $_FILES['foto']['tmp_name'];
+    move_uploaded_file($tmp, '../assets/images/anggota/'.$foto);
+    $target = "../assets/images/anggota/".$agt['foto'];
+    if (file_exists($target)) unlink($target);
+  } else {
+    $foto = $agt['foto'];
+  }
+
+  $query = "UPDATE tb_anggota SET nip='$nip', nama='$nama', telepon='$telepon', username='$username', password='$password', foto='$foto' WHERE id='$id'";
+
+  if (mysqli_query($conn, $query)) {
+    $res_updt_akun = [
+      'status' => 'success',
+      'message' => 'User berhasil diupdate',
+    ];    
+  } else { 
+    $res_updt_akun = [
+      'status' => 'error',
+      'message' => mysqli_error($conn),
+    ];
+  }
+}
 ?>
 <!DOCTYPE html>
 <html>
@@ -168,7 +207,7 @@ foreach ($gpkj as $x) {
             </div>
           </div>
           <div id="edit-profil" hidden="">
-            <form method="POST" action="#">
+            <form method="POST" action="#" enctype="multipart/form-data">
               <div class="form-group row">
                 <label class="col-sm-4 col-form-label">Nama Lengkap</label>
                 <div class="col-sm-8">
@@ -204,7 +243,7 @@ foreach ($gpkj as $x) {
               <div class="form-group row">
                 <label class="col-sm-4 col-form-label">Password</label>
                 <div class="col-sm-8">
-                  <input type="text" class="form-control" autocomplete="off" placeholder="Masukkan pasword baru untuk mengupdate..." name="password">
+                  <input type="text" class="form-control" autocomplete="off" placeholder="Masukkan password baru untuk mengupdate..." name="password">
                 </div>
               </div>
               <div class="form-group row">
