@@ -148,7 +148,7 @@ if (isset($_POST['addKegiatan'])) {
                     foreach ($kegiatan as $kgt) {  ?>
                       <div class="col-lg-6">
                         <div class="portlet">
-                          <div class="portlet-heading bg-primary">
+                          <div class="portlet-heading bg-purple">
                             <h3 class="portlet-title">
                               Data Kegiatan <?= $no ?>
                             </h3>
@@ -209,18 +209,18 @@ if (isset($_POST['addKegiatan'])) {
                   </div>
                 </div> 
                 <div class="tab-pane" id="messages-2">
-                  <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim.</p> 
-                  <p>Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt.Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim.</p> 
-                </div>
-                <div class="tab-pane" id="kegiatan-ditolak">
                   <div class="row">
                     <?php $no = 1; foreach ($result as $dta) {
                       $pengerjaan_id = $dta['id'];
-                      $kegiatan = mysqli_query($conn, "SELECT * FROM tb_kegiatan WHERE pengerjaan_id='$pengerjaan_id' AND status='refuse'");
-                      foreach ($kegiatan as $kgt) {  ?>
+                      $kegiatan = mysqli_query($conn, "SELECT * FROM tb_kegiatan WHERE pengerjaan_id='$pengerjaan_id' AND status='accept'");
+                      foreach ($kegiatan as $kgt) { 
+                        $kegiatan_id = $kgt['id'];
+                        $rating = mysqli_query($conn, "SELECT * FROM tb_rating WHERE kegiatan_id='$kegiatan_id'");
+                        $rat = mysqli_fetch_assoc($rating);
+                        ?>
                         <div class="col-lg-6">
                           <div class="portlet">
-                            <div class="portlet-heading bg-primary">
+                            <div class="portlet-heading bg-success">
                               <h3 class="portlet-title">
                                 Data Kegiatan <?= $no ?>
                               </h3>
@@ -269,6 +269,99 @@ if (isset($_POST['addKegiatan'])) {
                                   <b class="col-sm-4">Foto Kegiatan</b>
                                   <span class="col-sm-8">: <a href="#" data-toggle="modal" data-target="#modal-foto<?= $kgt['id'] ?>"><i class="fa fa-image"></i> Tampilkan Foto</a></span>
                                 </div>
+                                <div class="row">
+                                  <b class="col-sm-4">Rating</b>
+                                  <span class="col-sm-8">: 
+                                    <?php for ($i=1; $i <=5 ; $i++) { 
+                                      if ($i <= $rat['rating']) { ?>
+                                        <i class="fa fa-star text-warning"></i>
+                                      <?php } else { ?>
+                                        <i class="ti-star text-dark"></i>
+                                      <?php }
+                                    } ?>
+                                  </span>
+                                </div>
+                                <div class="row">
+                                  <b class="col-sm-4">Ulasan</b>
+                                  <span class="col-sm-8">: <?= $rat['keterangan'] ?></span>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <?php $no=$no+1; }
+                      }
+                      if ($no == 1) { ?>
+                        <h4 class="text-center"><i>Tidak ada data</i></h4>
+                      <?php } ?>
+                    </div>
+                  </div>
+                </div>
+                <div class="tab-pane" id="kegiatan-ditolak">
+                  <div class="row">
+                    <?php $no = 1; foreach ($result as $dta) {
+                      $pengerjaan_id = $dta['id'];
+                      $kegiatan = mysqli_query($conn, "SELECT * FROM tb_kegiatan WHERE pengerjaan_id='$pengerjaan_id' AND status='refuse'");
+                      foreach ($kegiatan as $kgt) { 
+                        $kegiatan_id = $kgt['id'];
+                        $rating = mysqli_query($conn, "SELECT * FROM tb_rating WHERE kegiatan_id='$kegiatan_id'");
+                        $rat = mysqli_fetch_assoc($rating);
+                        ?>
+                        <div class="col-lg-6">
+                          <div class="portlet">
+                            <div class="portlet-heading bg-danger">
+                              <h3 class="portlet-title">
+                                Data Kegiatan <?= $no ?>
+                              </h3>
+                              <div class="portlet-widgets">
+                                <a href="javascript:;" data-toggle="reload"><i class="ion-refresh"></i></a>
+                                <span class="divider"></span>
+                                <a data-toggle="collapse" data-parent="#accordion1" href="#bg-primary<?= $no ?>"><i class="ion-minus-round"></i></a>
+                              </div>
+                              <div class="clearfix"></div>
+                            </div>
+                            <div id="bg-primary<?= $no ?>" class="panel-collapse collapse in">
+                              <div class="portlet-body">
+                                <div class="row">
+                                  <b class="col-sm-4">Komponen </b>
+                                  <span class="col-sm-8">: <?= $dta['formulir'] ?></span>
+                                </div>
+                                <div class="row">
+                                  <b class="col-sm-4">Nomor Tiang </b>
+                                  <span class="col-sm-8">: <?= $dta['nomor_tiang'] ?></span>
+                                </div>
+                                <div class="row">
+                                  <b class="col-sm-4">Lokasi </b>
+                                  <span class="col-sm-8">: <?= $dta['lokasi'] ?></span>
+                                </div>
+                                <div class="row">
+                                  <b class="col-sm-4">Keterangan </b>
+                                  <span class="col-sm-8">: <?= $dta['keterangan'] ?></span>
+                                </div>
+                                <div class="row">
+                                  <b class="col-sm-4">Sasaran </b>
+                                  <span class="col-sm-8">: <?= $kgt['sasaran'] ?></span>
+                                </div>
+                                <div class="row">
+                                  <b class="col-sm-4">Waktu Mulai</b>
+                                  <span class="col-sm-8">: <?= date('d/m/y H:i', strtotime($kgt['waktu_mulai'])) ?></span>
+                                </div>
+                                <div class="row">
+                                  <b class="col-sm-4">Waktu Selesai</b>
+                                  <span class="col-sm-8">: <?= date('d/m/y H:i', strtotime($kgt['waktu_selesai'])) ?></span>
+                                </div>
+                                <div class="row">
+                                  <b class="col-sm-4">Durasi Kegiatan</b>
+                                  <span class="col-sm-8">: <?= $kgt['durasi'] ?> Menit</span>
+                                </div>
+                                <div class="row">
+                                  <b class="col-sm-4">Foto Kegiatan</b>
+                                  <span class="col-sm-8">: <a href="#" data-toggle="modal" data-target="#modal-foto<?= $kgt['id'] ?>"><i class="fa fa-image"></i> Tampilkan Foto</a></span>
+                                </div>
+                                <div class="row">
+                                  <b class="col-sm-4">Alasan Penolakan</b>
+                                  <span class="col-sm-8">: <?= $rat['keterangan'] ?></span>
+                                </div>
                               </div>
                             </div>
                           </div>
@@ -309,8 +402,8 @@ if (isset($_POST['addKegiatan'])) {
                 </div>
                 <div class="form-group">
                   <label class="col-form-label">Komponen/Formulir</label>
-                  <select class="form-control" id="select-formulir">
-                    <option>--Pilih Kompoen/Formulir--</option>
+                  <select class="form-control" id="select-formulir" required="">
+                    <option value="">--Pilih Kompoen/Formulir--</option>
                     <?php foreach ($pngrjaan as $pkr) {
                       if (date('Y-m-d', strtotime($pkr['tggl_selesai'])) >= date('Y-m-d')) { ?>
                         <option value="<?= $pkr['id'] ?>"><?= $pkr['formulir'].' (Nomor Tiang: '.$pkr['nomor_tiang'].')' ?></option>

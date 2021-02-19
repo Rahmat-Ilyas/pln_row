@@ -2,6 +2,9 @@
 require('../config.php');
 
 if (!isset($_SESSION['login_kldevis'])) header("location: ../login.php");
+
+$kegiatan = mysqli_query($conn, "SELECT * FROM tb_kegiatan WHERE status='proccess'");
+$kgt_new = mysqli_num_rows($kegiatan);
 ?>
 <!DOCTYPE html>
 <html>
@@ -69,7 +72,7 @@ if (!isset($_SESSION['login_kldevis'])) header("location: ../login.php");
 
                 <ul class="nav navbar-nav navbar-right pull-right">
                   <li class="dropdown top-menu-item-xs">
-                    <a href="" class="dropdown-toggle profile waves-effect waves-light" data-toggle="dropdown" aria-expanded="true"><img src="../assets/images/users/avatar-1.jpg" alt="user-img" class="img-circle"> </a>
+                    <a href="" class="dropdown-toggle profile waves-effect waves-light" data-toggle="dropdown" aria-expanded="true"><img src="../assets/images/users/avatar-1.png" alt="user-img" class="img-circle"> </a>
                     <ul class="dropdown-menu">
                       <li><a href="javascript:void(0)"><i class="ti-user m-r-10 text-custom"></i> Profile</a></li>
                       <li class="divider"></li>
@@ -93,14 +96,29 @@ if (!isset($_SESSION['login_kldevis'])) header("location: ../login.php");
             <div id="sidebar-menu">
               <ul>
                 <li class="has_sub">
-                  <a href="javascript:void(0);" class="waves-effect"><i class="ti-dashboard"></i> <span> Dashboard </span></a>
+                  <a href="index.php" class="waves-effect"><i class="ti-dashboard"></i> <span> Dashboard </span></a>
                 </li>
 
                 <li class="has_sub">
-                  <a href="javascript:void(0);" class="waves-effect"><i class="fa fa-table"></i> <span>Data Pengerjaan </span> <span class="menu-arrow"></span> </a>
+                  <a href="javascript:void(0);" class="waves-effect">
+                    <i class="fa fa-table"></i>
+                    <span>Pngerjaan & Kegiatan</span> 
+                    <?php if ($kgt_new > 0) {  ?>
+                      <span class="badge badge-xs badge-danger pull-right" style="font-size: 11px; margin-top: -28px;"><?= $kgt_new ?></span>
+                    <?php } else { ?>
+                      <span class="menu-arrow"></span>
+                    <?php } ?>
+                  </a>
                   <ul class="list-unstyled">
-                    <li><a href="ui-buttons.html">Pengerjaan Baru</a></li>
-                    <li><a href="ui-loading-buttons.html">Riwayat Pengerjaan</a></li>
+                    <li>
+                      <a href="kegiatan-baru.php">Kegiatan Baru
+                        <?php if ($kgt_new > 0) {  ?>
+                          <span class="badge badge-xs badge-danger pull-right" style="font-size: 11px;"><?= $kgt_new ?></span>
+                        <?php } ?>
+                      </a>
+                    </li>
+                    <li><a href="data-pengerjaan.php">Data Kegiatan</a></li>
+                    <li><a href="data-kegiatan.php">Data Pengerjaan</a></li>
                   </ul>
                 </li>
 

@@ -33,13 +33,13 @@ if (isset($_POST['submit'])) {
         <!-- Page-Title -->
         <div class="row">
           <div class="col-sm-12">
-            <h4 class="page-title">Laporan Pengerjaan</h4>
+            <h4 class="page-title">Data Anggota</h4>
             <ol class="breadcrumb">
               <li>
                 <a href="#">Kepala Devisi</a>
               </li>
               <li class="active">
-                Laporan Pengerjaan
+                Data Anggota
               </li>
             </ol>
           </div>
