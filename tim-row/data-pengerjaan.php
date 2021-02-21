@@ -273,10 +273,10 @@ if (isset($_POST['addKegiatan'])) {
                     $status = 'Selesai Diproses';
                     $color = 'success';
                     $ket = $rat['keterangan'];
-                  } else if ($kgt['status'] == 'revuse') {
+                  } else if ($kgt['status'] == 'refuse') {
                     $status = 'Ditolak';
                     $color = 'danger';
-                    $ket = 'Laporan kegiatan ditolak, tidak ada rating untuk kegiatan ini';
+                    $ket = $rat['keterangan'];
                   }
                   ?>
                   <tr>
