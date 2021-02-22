@@ -117,8 +117,8 @@ $kgt_new = mysqli_num_rows($kegiatan);
                         <?php } ?>
                       </a>
                     </li>
-                    <li><a href="data-pengerjaan.php">Data Kegiatan</a></li>
-                    <li><a href="data-kegiatan.php">Data Pengerjaan</a></li>
+                    <li><a href="data-kegiatan.php">Data Kegiatan</a></li>
+                    <li><a href="data-pengerjaan.php">Data Pengerjaan</a></li>
                   </ul>
                 </li>
 

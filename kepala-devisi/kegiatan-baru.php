@@ -3,6 +3,7 @@ require('template/header.php');
 
 $result = mysqli_query($conn, "SELECT * FROM tb_kegiatan WHERE status='proccess' ORDER BY id DESC");
 
+// SET ACCEPT
 if (isset($_POST['submitRating'])) {
   $kegiatan_id = $_POST['kegiatan_id'];
   $rating = $_POST['rating'];
@@ -24,6 +25,7 @@ if (isset($_POST['submitRating'])) {
   }
 }
 
+// SET REFUSE
 if (isset($_POST['submitRefuse'])) {
   $kegiatan_id = $_POST['kegiatan_id'];
   $rating = 0;
