@@ -194,13 +194,13 @@ foreach ($pengerjaan as $pgr) {
             </thead>
             <tbody>
               <?php $no=1; foreach ($kegiatan as $kgt) { 
-                  // Rating
+                // Rating
                 $kegiatan_id = $kgt['id'];
                 $rating = mysqli_query($conn, "SELECT * FROM tb_rating WHERE kegiatan_id='$kegiatan_id'");
                 $rat = mysqli_fetch_assoc($rating); 
                 if ($rat) $jum_rating = $rat['rating'];
-                else $jum_rating = 0; 
-                  // Status
+                else $jum_rating = 0;
+                // Status
                 if ($kgt['status'] == 'new') {
                   $status = 'Kegiatan Baru';
                   $color = 'primary';

@@ -1,7 +1,7 @@
 <?php 
 require('template/header.php');
 
-$result = mysqli_query($conn, "SELECT * FROM tb_kegiatan WHERE status='proccess' ORDER BY id DESC");
+$result = mysqli_query($conn, "SELECT * FROM tb_kegiatan WHERE status!='proccess' ORDER BY status ASC");
 
 if (isset($_POST['submitRating'])) {
   $kegiatan_id = $_POST['kegiatan_id'];
@@ -82,12 +82,26 @@ if (isset($_POST['submitRefuse'])) {
                     <th>No Tiang</th>
                     <th>Total Kerusakan</th>
                     <th>Durasi Pengerjaan</th>
-                    <th>Detail</th>
-                    <th width="50">Proses</th>
+                    <th>Status</th>
+                    <th width="80">Aksi</th>
                   </tr>
                 </thead>
                 <tbody>
                   <?php foreach ($result as $dta) {
+                      // Status
+                    if ($dta['status'] == 'new') {
+                      $status = 'Kegiatan Baru';
+                      $color = 'primary';
+                    } else if ($dta['status'] == 'proccess') {
+                      $status = 'Sedang Diproses';
+                      $color = 'info';
+                    } else if ($dta['status'] == 'accept') {
+                      $status = 'Selesai Diproses';
+                      $color = 'success';
+                    } else if ($dta['status'] == 'refuse') {
+                      $status = 'Ditolak';
+                      $color = 'danger';
+                    }
                     $pgrjan_id = $dta['pengerjaan_id'];
                     $pngrjaan = mysqli_query($conn, "SELECT * FROM tb_pengerjaan WHERE id='$pgrjan_id'");
                     $pgr = mysqli_fetch_assoc($pngrjaan);
@@ -107,12 +121,12 @@ if (isset($_POST['submitRefuse'])) {
                       <td><?= $pgr['nomor_tiang'] ?></td>
                       <td><?= $dta['total_kerusakan'] ?> Kerusakan</td>
                       <td><?= $dta['durasi'] ?> Menit</td>
+                      <td>
+                        <span class="label label-table label-<?= $color ?>"><?= $status ?></span>
+                      </td>
                       <td class="text-center">
                         <a href="#" class="btn btn-sm btn-info" data-toggle="modal" data-target="#modal-detail<?= $dta['id'] ?>" data-toggle1="tooltip" title="" data-original-title="Tampilkan Detail Kegiatan"><i class="fa fa-list"></i></a>
-                      </td>
-                      <td>
-                        <a href="#" class="btn btn-sm btn-success" data-toggle="modal" data-target="#modal-accept<?= $dta['id'] ?>" data-toggle1="tooltip" title="" data-original-title="Accept Kegiatan"><i class="fa fa-check-square"></i></a>
-                        <a href="#" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#modal-refuse<?= $dta['id'] ?>" data-toggle1="tooltip" title="" data-original-title="Tolak Kegiatan"><i class="fa fa-times-circle"></i></a>
+                        <a href="#" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#modal-refuse<?= $dta['id'] ?>" data-toggle1="tooltip" title="" data-original-title="Hapus Data Kegiatan"><i class="fa fa-trash"></i></a>
                       </td>
                     </tr>
                   <?php } ?>
@@ -300,6 +314,34 @@ if (isset($_POST['submitRefuse'])) {
                     <li class="list-group-item row">
                       <b class="col-sm-4 p-0">Durasi Pengerjaan: </b>
                       <span class="col-sm-8 p-0"><?= $dta['durasi'] ?> Menit</span>
+                    </li>
+                    <li class="list-group-item row">
+                      <?php 
+                      // Rating
+                      $kegiatan_id = $dta['id'];
+                      $rating = mysqli_query($conn, "SELECT * FROM tb_rating WHERE kegiatan_id='$kegiatan_id'");
+                      $rat = mysqli_fetch_assoc($rating); 
+                      if ($rat) {
+                        $jum_rating = $rat['rating'];
+                        $ket = $rat['keterangan'];
+                      }
+                      else {
+                        $jum_rating = 0;
+                        $ket = "Belum ada rating";
+                      }
+                      ?>
+                      <b class="col-sm-4 p-0">Rating: </b>
+                      <span class="col-sm-8 p-0">
+                        <a href="#" data-toggle1="tooltip" title="" data-original-title="<?= $ket ?>">
+                          <?php for ($i=1; $i <=5 ; $i++) { 
+                            if ($i <= $jum_rating) { ?>
+                              <i class="fa fa-star text-warning"></i>
+                            <?php } else { ?>
+                              <i class="ti-star text-dark"></i>
+                            <?php }
+                          } ?>
+                        </a>
+                      </span>
                     </li>
                     <li class="list-group-item row">
                       <b class="col-sm-4 p-0">Foto Kegiatan: </b>
