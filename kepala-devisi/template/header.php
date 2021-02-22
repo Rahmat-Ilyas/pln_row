@@ -5,6 +5,36 @@ if (!isset($_SESSION['login_kldevis'])) header("location: ../login.php");
 
 $kegiatan = mysqli_query($conn, "SELECT * FROM tb_kegiatan WHERE status='proccess'");
 $kgt_new = mysqli_num_rows($kegiatan);
+
+$kp_devisi = mysqli_query($conn, "SELECT * FROM tb_kepaladevisi");
+$kdv = mysqli_fetch_assoc($kp_devisi);
+
+// Update Akun Anggota 
+if (isset($_POST['update_akun'])) {
+  $id = $_POST['id'];
+  $nip = $_POST['nip'];
+  $nama = $_POST['nama'];
+  $username = $_POST['username'];
+  if ($_POST['password'])
+    $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+  else
+    $password = $kdv['password'];
+
+  $query = "UPDATE tb_kepaladevisi SET nip='$nip', nama='$nama', username='$username', password='$password' WHERE id='$id'";
+
+  if (mysqli_query($conn, $query)) {
+    $res_updt_akun = [
+      'status' => 'success',
+      'message' => 'User berhasil diupdate',
+    ];    
+  } else { 
+    $res_updt_akun = [
+      'status' => 'error',
+      'message' => mysqli_error($conn),
+    ];
+  }
+}
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -74,7 +104,7 @@ $kgt_new = mysqli_num_rows($kegiatan);
                   <li class="dropdown top-menu-item-xs">
                     <a href="" class="dropdown-toggle profile waves-effect waves-light" data-toggle="dropdown" aria-expanded="true"><img src="../assets/images/users/avatar-1.png" alt="user-img" class="img-circle"> </a>
                     <ul class="dropdown-menu">
-                      <li><a href="javascript:void(0)"><i class="ti-user m-r-10 text-custom"></i> Profile</a></li>
+                      <li><a href="javascript:void(0)" data-toggle="modal" data-target="#modal-profile"><i class="ti-user m-r-10 text-custom"></i> Profile</a></li>
                       <li class="divider"></li>
                       <li><a href="../logout.php"><i class="ti-power-off m-r-10 text-danger"></i> Logout</a></li>
                     </ul>
@@ -154,3 +184,53 @@ $kgt_new = mysqli_num_rows($kegiatan);
         <!-- Start right Content here -->
         <!-- ============================================================== -->
         <div class="content-page">
+
+          <!-- MODAL EDIT ALAT-->
+          <div class="modal" id="modal-profile" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display: none;">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                  <h4 class="modal-title" id="myLargeModalLabel">Update Profile</h4>
+                </div>
+                <div class="modal-body" style="padding: 20px 50px 0 50px">
+                  <div id="edit-profil">
+                    <form method="POST" action="#" enctype="multipart/form-data">
+                      <div class="form-group row">
+                        <label class="col-sm-4 col-form-label">Nama Lengkap</label>
+                        <div class="col-sm-8">
+                          <input type="hidden" name="id" value="<?= $kdv['id'] ?>">
+                          <input type="text" class="form-control" required="" autocomplete="off" placeholder="Nama..." name="nama" value="<?= $kdv['nama'] ?>">
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <label class="col-sm-4 col-form-label">NIP</label>
+                        <div class="col-sm-8">
+                          <input type="text" class="form-control" required="" autocomplete="off" placeholder="NIP..." name="nip" value="<?= $kdv['nip'] ?>">
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <label class="col-sm-4 col-form-label">Username</label>
+                        <div class="col-sm-8">
+                          <input type="text" class="form-control" required="" autocomplete="off" placeholder="Username..." name="username" value="<?= $kdv['username'] ?>">
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <label class="col-sm-4 col-form-label">Password</label>
+                        <div class="col-sm-8">
+                          <input type="text" class="form-control" autocomplete="off" placeholder="Masukkan password baru untuk mengupdate..." name="password">
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <div class="col-sm-4"></div>
+                        <div class="col-sm-8">
+                          <button type="submit" name="update_akun" class="btn btn-default" id="upload">Update</button>
+                          <a href="#" class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Batal</a>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
