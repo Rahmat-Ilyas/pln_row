@@ -4,7 +4,7 @@ require('template/header.php');
 $result = mysqli_query($conn, "SELECT * FROM tb_priode_laporan ORDER BY id DESC");
 $prd = mysqli_fetch_assoc($result);
 
-$pengerjaan = mysqli_query($conn, "SELECT * FROM tb_pengerjaan");
+$pengerjaan = mysqli_query($conn, "SELECT * FROM tb_pengerjaan WHERE anggota_id='$anggota_id' ORDER BY id DESC");
 $priode_mulai = strtotime($prd['tanggal_mulai']);
 $priode_akhir = strtotime($prd['tanggal_akhir']);
 $data_pgrjaan = [];
@@ -67,7 +67,7 @@ foreach ($pengerjaan as $pgr) {
                         </thead>
                         <tbody>
                           <?php 
-                          $pengerjaan = mysqli_query($conn, "SELECT * FROM tb_pengerjaan");
+                          $pengerjaan = mysqli_query($conn, "SELECT * FROM tb_pengerjaan WHERE anggota_id='$anggota_id' ORDER BY id DESC");
                           $x = 1;
                           $jum_pengerjaan = 0;
                           $jum_kegiatan = 0;

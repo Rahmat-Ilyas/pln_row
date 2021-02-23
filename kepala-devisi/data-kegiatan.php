@@ -1,7 +1,7 @@
 <?php 
 require('template/header.php');
 
-$result = mysqli_query($conn, "SELECT * FROM tb_kegiatan WHERE status!='proccess' ORDER BY status ASC");
+$result = mysqli_query($conn, "SELECT * FROM tb_kegiatan ORDER BY id DESC");
 
 // DELETE KEGIATAN
 if (isset($_GET['delete'])) {

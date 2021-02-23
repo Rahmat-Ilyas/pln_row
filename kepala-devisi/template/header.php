@@ -155,8 +155,8 @@ if (isset($_POST['update_akun'])) {
                 <li class="has_sub">
                   <a href="javascript:void(0);" class="waves-effect"><i class="fa fa-file-text-o"></i><span> Kelola Laporan </span> <span class="menu-arrow"></span></a>
                   <ul class="list-unstyled">
-                    <li><a href="ui-buttons.html">Cetak Laporan</a></li>
-                    <li><a href="ui-loading-buttons.html">Arsip Laporan</a></li>
+                    <li><a href="cetak-laporan.php">Cetak Laporan</a></li>
+                    <li><a href="arsip-laporan.php">Arsip Laporan</a></li>
                   </ul>
                 </li>
 

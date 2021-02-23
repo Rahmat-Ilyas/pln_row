@@ -29,16 +29,6 @@ $prd = mysqli_fetch_assoc($priode);
 
 $pngrjaan = mysqli_query($conn, "SELECT * FROM tb_pengerjaan ORDER BY id DESC");
 
-$priode_mulai = strtotime($prd['tanggal_mulai']);
-$priode_akhir = strtotime($prd['tanggal_akhir']);
-$result = [];
-foreach ($pngrjaan as $pgr) {
-  $pgr_mulai = strtotime($pgr['tggl_mulai']);
-  $pgr_selesai = strtotime($pgr['tggl_selesai']);
-  if ($priode_mulai < $pgr_mulai && $priode_akhir > $pgr_mulai || $priode_mulai < $pgr_selesai && $priode_akhir > $pgr_selesai) {
-    $result[] = $pgr;
-  }
-}
 ?>
 <div class="content">
   <div class="container">
@@ -82,7 +72,7 @@ foreach ($pngrjaan as $pgr) {
                   </tr>
                 </thead>
                 <tbody>
-                  <?php $no = 1; foreach ($result as $dta) { 
+                  <?php $no = 1; foreach ($pngrjaan as $dta) { 
                     // Priode
                     $tggl_mulai = new DateTime($dta['tggl_mulai']);
                     $tggl_selesai = new DateTime($dta['tggl_selesai']);
@@ -112,7 +102,7 @@ foreach ($pngrjaan as $pgr) {
                       <td><?= $dta['formulir'] ?></td>
                       <td><?= $dta['nomor_tiang'] ?></td>
                       <td>
-                        <?= date('d M', strtotime($dta['tggl_mulai'])).' - '.date('d M', strtotime($dta['tggl_selesai'])) ?> (<?= $priode ?>)
+                        <?= date('d M y', strtotime($dta['tggl_mulai'])).' - '.date('d M y', strtotime($dta['tggl_selesai'])) ?> (<?= $priode ?>)
                       </td>
                       <td><?= $dta['lokasi'] ?></td>
                       <td><?= $total_kegiatan ?> Kegiatan</td>
@@ -135,7 +125,7 @@ foreach ($pngrjaan as $pgr) {
     </div>
   </div>
 
-  <?php foreach ($result as $dta) { 
+  <?php foreach ($pngrjaan as $dta) { 
     // Priode
     $tggl_mulai = new DateTime($dta['tggl_mulai']);
     $tggl_selesai = new DateTime($dta['tggl_selesai']);
@@ -196,7 +186,7 @@ foreach ($pngrjaan as $pgr) {
               <div class="col-sm-6">
                 <dt class="col-sm-5">Waktu Pengerjaan</dt>
                 <dd class="col-sm-7">: 
-                  <?= date('d M', strtotime($dta['tggl_mulai'])).' - '.date('d M', strtotime($dta['tggl_selesai'])) ?> (<?= $priode ?>)
+                  <?= date('d M y', strtotime($dta['tggl_mulai'])).' - '.date('d M y', strtotime($dta['tggl_selesai'])) ?> (<?= $priode ?>)
                 </dd>
 
                 <dt class="col-sm-5">Lokasi</dt>
