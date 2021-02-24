@@ -45,6 +45,7 @@ defer></script>
 	$(document).ready(function() {
 		$('[data-toggle1="tooltip"]').tooltip();
 		$('#datatable').dataTable();
+		$('.datatable').dataTable();
 
 		<?php if (isset($res_updt_akun) && $res_updt_akun['status'] == 'success') { ?>
 			Swal.fire({

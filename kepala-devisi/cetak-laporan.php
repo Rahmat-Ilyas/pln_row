@@ -139,7 +139,7 @@ $priode_akhir = strtotime($prd['tanggal_akhir']);
                 <span>EXPORT TANGGAL: </span><span class="export"></span>      
               </div>
             </div>
-            <table id="datatable" class="table table-striped table-bordered m-t-10">
+            <table class="table table-striped table-bordered m-t-10">
               <thead>
                 <tr>
                   <th width="10">No</th>
@@ -181,7 +181,7 @@ $priode_akhir = strtotime($prd['tanggal_akhir']);
                 <span>EXPORT TANGGAL: </span><span class="export"></span>      
               </div>
             </div>
-            <table id="datatable" class="table table-striped table-bordered m-t-10">
+            <table class="table table-striped table-bordered m-t-10">
               <thead>
                 <tr>
                   <th width="10">No</th>
@@ -197,7 +197,7 @@ $priode_akhir = strtotime($prd['tanggal_akhir']);
           </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
         </div>
       </div>
     </div>
