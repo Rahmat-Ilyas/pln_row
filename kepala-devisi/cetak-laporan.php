@@ -32,7 +32,7 @@ $priode_akhir = strtotime($prd['tanggal_akhir']);
         <div class="row">
           <div class="col-sm-12">
             <div class="card-box table-responsive">
-              <h4 class="m-t-0 header-title"><b>Data Laporan per priode: <?= date('d M', strtotime($priode_mulai)) ?> - <?= date('d M', strtotime($priode_akhir)) ?></b></h4>
+              <h4 class="m-t-0 header-title"><b>Data Laporan per priode: <?= date('d M y', $priode_mulai) ?> - <?= date('d M y', $priode_akhir) ?></b></h4>
 
               <table id="datatable" class="table table-striped table-bordered">
                 <thead>
@@ -76,18 +76,18 @@ $priode_akhir = strtotime($prd['tanggal_akhir']);
                         <td><?= $jum_pengerjaan ?> Pengerjaan</td>
                         <td><?= $jum_kegiatan ?> Kegiatan</td>
                         <td class="text-center">
-                          <a href="#" class="btn btn-sm btn-info" data-toggle="modal" data-target="#modal-edit<?= $dta['id'] ?>"><i class="fa fa-list"></i>&nbsp; Detail Laporan</a>
+                          <a href="#" class="btn btn-sm btn-info view-lapran" data-toggle="modal" data-target="#modal-view" data-id="<?= $dta['id'] ?>"><i class="fa fa-eye"></i>&nbsp; Lihat Laporan</a>
                           <div class="btn-group">
                             <button type="button" class="btn btn-pink dropdown-toggle waves-effect waves-light" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-print"></i> Print Laporan <span class="caret"></span></button>
                             <ul class="dropdown-menu dropdown-menu-right" role="menu">
                               <li>
-                                <a href="#" id="print-inspeksi">
-                                  <i class="fa fa-file-excel-o"></i> Laporan Inspeksi
+                                <a href="#" class="print-inspeksi" data-id="<?= $dta['id'] ?>">
+                                  Laporan Inspeksi
                                 </a>
                               </li>
                               <li>
-                                <a href="#" id="print-formulir">
-                                  <i class="fa fa-file-pdf-o"></i> Laporan Inspeksi Formulir
+                                <a href="#" class="print-formulir" data-id="<?= $dta['id'] ?>">
+                                  Laporan Inspeksi Formulir
                                 </a>
                               </li>
                             </ul>
@@ -106,6 +106,104 @@ $priode_akhir = strtotime($prd['tanggal_akhir']);
     </div>
   </div>
 
+  <!-- MODAL REVIEW LAPORAN -->
+  <div class="modal" id="modal-view" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Preview Laporan</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-body" style="font-size: 12px;">
+          <div class="m-t-0 m-b-20">
+            <h3 class="text-center">LAPORAN INSPEKSI</h3>
+            <div class="row"> 
+              <div class="col-sm-1" style="width: 8%; float: left;">
+                <img src="../assets/images/pln_logo.png" height="80">
+              </div>
+              <div class="col-sm-3" style="width: 35%; float: left;">
+                <span>UNIT: </span><span class="unit"></span><br>
+                <span>GARDU INDUK: </span><span class="gardu_induk"></span><br>
+                <span>PENGHANTAR: -</span><br>
+                <span>TOWER/JOIN: </span><span class="nomor_tiang"></span><br>
+              </div>
+              <div class="col-sm-3" style="width: 32%; float: left;">
+                <span>GROUNDPATROL: </span><span class="anggota"></span><br>
+                <span>PRIODE: </span><span class="priode"></span><br>
+                <span>DARI: </span><span class="priode_mulai"></span><br>
+                <span>SAMPAI: </span><span class="priode_akhir"></span><br>
+              </div>
+              <div class="col-sm-3" style="width: 25%; float: left;">
+                <span>EXPORT TANGGAL: </span><span class="export"></span>      
+              </div>
+            </div>
+            <table id="datatable" class="table table-striped table-bordered m-t-10">
+              <thead>
+                <tr>
+                  <th width="10">No</th>
+                  <th>UNIT</th>
+                  <th>GARDU INDUK</th>
+                  <th>FORMULIR</th>
+                  <th>PRIODE</th>
+                  <th>GROUNDPATROL</th>
+                  <th>TANGGAL</th>
+                  <th>TOTAL KERUSAKAN</th>
+                  <th>DURASI (MENIT)</th>
+                </tr>
+              </thead>
+              <tbody id="dtl_table">
+
+              </tbody>
+            </table>
+          </div>
+          <div style="border: dashed 3px;" class="m-t-10"></div>
+          <div class="m-t-20">
+            <h3 class="text-center">LAPORAN INSPEKSI FORMULIR MANDOR LINE</h3>
+            <div class="row"> 
+              <div class="col-sm-1" style="width: 8%; float: left;">
+                <img src="../assets/images/pln_logo.png" height="80">
+              </div>
+              <div class="col-sm-3" style="width: 35%; float: left;">
+                <span>UNIT: </span><span class="unit"></span><br>
+                <span>GARDU INDUK: </span><span class="gardu_induk"></span><br>
+                <span>PENGHANTAR: -</span><br>
+                <span>TOWER/JOIN: </span><span class="nomor_tiang"></span><br>
+              </div>
+              <div class="col-sm-3" style="width: 32%; float: left;">
+                <span>GROUNDPATROL: </span><span class="anggota"></span><br>
+                <span>PRIODE: </span><span class="priode"></span><br>
+                <span>DARI: </span><span class="priode_mulai"></span><br>
+                <span>SAMPAI: </span><span class="priode_akhir"></span><br>
+              </div>
+              <div class="col-sm-3" style="width: 25%; float: left;">
+                <span>EXPORT TANGGAL: </span><span class="export"></span>      
+              </div>
+            </div>
+            <table id="datatable" class="table table-striped table-bordered m-t-10">
+              <thead>
+                <tr>
+                  <th width="10">No</th>
+                  <th>KOMPONEN/ FORMULIR</th>
+                  <th>KETERANGAN</th>
+                  <th>SASARAN PEMERIKSAAN</th>
+                  <th>FOTO</th>
+                </tr>
+              </thead>
+              <tbody id="dtl_table1">
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PRINT AREA -->
   <div id="inspeksi" class="bg-white" hidden="">
     <h2 class="text-center">LAPORAN INSPEKSI</h2>
     <div class="row"> 
@@ -113,22 +211,22 @@ $priode_akhir = strtotime($prd['tanggal_akhir']);
         <img src="../assets/images/pln_logo.png" height="80">
       </div>
       <div class="col-sm-3" style="width: 35%; float: left;">
-        <span>UNIT: UPT SISTEM SULSELRABAR</span><br>
-        <span>GARDU INDUK: GUDANG UPT SULSELRABAR</span><br>
+        <span>UNIT: </span><span class="unit"></span><br>
+        <span>GARDU INDUK: </span><span class="gardu_induk"></span><br>
         <span>PENGHANTAR: -</span><br>
-        <span>TOWER/JOIN: 2</span><br>
+        <span>TOWER/JOIN: </span><span class="nomor_tiang"></span><br>
       </div>
       <div class="col-sm-3" style="width: 32%; float: left;">
-        <span>GROUNDPATROL: RUSLAN</span><br>
-        <span>PRIODE: -</span><br>
-        <span>DARI: 01-05-2020</span><br>
-        <span>SAMPAI: 31-05-2020</span><br>
+        <span>GROUNDPATROL: </span><span class="anggota"></span><br>
+        <span>PRIODE: </span><span class="priode"></span><br>
+        <span>DARI: </span><span class="priode_mulai"></span><br>
+        <span>SAMPAI: </span><span class="priode_akhir"></span><br>
       </div>
       <div class="col-sm-3" style="width: 25%; float: left;">
-        <span>EXPORT TANGGAL: <?= date('d-m-Y') ?></span>      
+        <span>EXPORT TANGGAL: </span><span class="export"></span>      
       </div>
     </div>
-    <table id="datatable" class="table table-striped table-bordered">
+    <table id="datatable" class="table table-striped table-bordered m-t-10">
       <thead>
         <tr>
           <th width="10">No</th>
@@ -142,25 +240,35 @@ $priode_akhir = strtotime($prd['tanggal_akhir']);
           <th>DURASI (MENIT)</th>
         </tr>
       </thead>
-      <tbody>
-        <tr>
-          <td>1</td>
-          <td>UPT SISTEM SULSELRABAR</td>
-          <td>GUDANG UPT SULSELRABAR</td>
-          <td>TOWE DAN SPAN</td>
-          <td>TRIWULAN</td>
-          <td>RUSLAN</td>
-          <td>21-MAY-20</td>
-          <td>1</td>
-          <td>6.57</td>
-        </tr>
+      <tbody id="dt_table">
+
       </tbody>
     </table>
   </div>
 
-  <div id="inspeksi-formulir" class="bg-white" hidden="">
+  <div id="inspeksi-formulir" class="bg-white" style="font-size: 11px;" hidden="">
     <h2 class="text-center">LAPORAN INSPEKSI FORMULIR MANDOR LINE</h2>
-    <table id="datatable" class="table table-striped table-bordered">
+    <div class="row"> 
+      <div class="col-sm-1" style="width: 8%; float: left;">
+        <img src="../assets/images/pln_logo.png" height="80">
+      </div>
+      <div class="col-sm-3" style="width: 35%; float: left;">
+        <span>UNIT: </span><span class="unit"></span><br>
+        <span>GARDU INDUK: </span><span class="gardu_induk"></span><br>
+        <span>PENGHANTAR: -</span><br>
+        <span>TOWER/JOIN: </span><span class="nomor_tiang"></span><br>
+      </div>
+      <div class="col-sm-3" style="width: 32%; float: left;">
+        <span>GROUNDPATROL: </span><span class="anggota"></span><br>
+        <span>PRIODE: </span><span class="priode"></span><br>
+        <span>DARI: </span><span class="priode_mulai"></span><br>
+        <span>SAMPAI: </span><span class="priode_akhir"></span><br>
+      </div>
+      <div class="col-sm-3" style="width: 25%; float: left;">
+        <span>EXPORT TANGGAL: </span><span class="export"></span>      
+      </div>
+    </div>
+    <table id="datatable" class="table table-striped table-bordered m-t-10">
       <thead>
         <tr>
           <th width="10">No</th>
@@ -170,16 +278,7 @@ $priode_akhir = strtotime($prd['tanggal_akhir']);
           <th>FOTO</th>
         </tr>
       </thead>
-      <tbody>
-        <tr>
-          <td>1</td>
-          <td>Tangga Panjat</td>
-          <td>Komponen ini berfun untuk memberikan sesuatu yang sangat melakuannv</td>
-          <td>Periksa kondisi untuk panjat</td>
-          <td>
-            <img src="../assets/images/pln_logo.png" width="200">
-          </td>
-        </tr>
+      <tbody id="dt_table1">
       </tbody>
     </table>
   </div>
@@ -190,12 +289,69 @@ $priode_akhir = strtotime($prd['tanggal_akhir']);
 
   <script type="text/javascript">
     $(document).ready(function($) {
-      $('#print-inspeksi').click(function(event) {
-        $('#inspeksi').printArea();
+      $('.print-inspeksi').click(function(event) {
+        var anggota_id = $(this).attr('data-id');
+        $.ajax({
+          url     : '../controller.php',
+          method  : "POST",
+          data    : { anggota_id: anggota_id, req: 'laporanInspeksi' },
+          success : function(data) {
+            $('.unit').text(data.unit);
+            $('.gardu_induk').text(data.gardu_induk);
+            $('.nomor_tiang').text(data.nomor_tiang);
+            $('.anggota').text(data.anggota);
+            $('.priode').text(data.priode);
+            $('.priode_mulai').text(data.priode_mulai);
+            $('.priode_akhir').text(data.priode_akhir);
+            $('.export').text(data.export);
+            $('#dt_table').html(data.dt_table);
+
+            $('#inspeksi').printArea();
+          }
+        });
       });
 
-      $('#print-formulir').click(function(event) {
-        $('#inspeksi-formulir').printArea();
+      $('.print-formulir').click(function(event) {
+        var anggota_id = $(this).attr('data-id');
+        $.ajax({
+          url     : '../controller.php',
+          method  : "POST",
+          data    : { anggota_id: anggota_id, req: 'inspeksiFormulir' },
+          success : function(data) {
+            $('.unit').text(data.unit);
+            $('.gardu_induk').text(data.gardu_induk);
+            $('.nomor_tiang').text(data.nomor_tiang);
+            $('.anggota').text(data.anggota);
+            $('.priode').text(data.priode);
+            $('.priode_mulai').text(data.priode_mulai);
+            $('.priode_akhir').text(data.priode_akhir);
+            $('.export').text(data.export);
+            $('#dt_table1').html(data.dt_table1);
+            
+            $('#inspeksi-formulir').printArea();
+          }
+        });
+      });
+
+      $('.view-lapran').click(function(event) {
+        var anggota_id = $(this).attr('data-id');
+        $.ajax({
+          url     : '../controller.php',
+          method  : "POST",
+          data    : { anggota_id: anggota_id, req: 'detailLaporan' },
+          success : function(data) {
+            $('.unit').text(data.unit);
+            $('.gardu_induk').text(data.gardu_induk);
+            $('.nomor_tiang').text(data.nomor_tiang);
+            $('.anggota').text(data.anggota);
+            $('.priode').text(data.priode);
+            $('.priode_mulai').text(data.priode_mulai);
+            $('.priode_akhir').text(data.priode_akhir);
+            $('.export').text(data.export);
+            $('#dtl_table').html(data.dtl_table);
+            $('#dtl_table1').html(data.dtl_table1);
+          }
+        });
       });
 
       <?php if (isset($response) && $response['status'] == 'success') { ?>

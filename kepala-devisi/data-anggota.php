@@ -1,7 +1,7 @@
 <?php 
 require('template/header.php');
 
-$result = mysqli_query($conn, "SELECT * FROM tb_anggota");
+$result = mysqli_query($conn, "SELECT * FROM tb_anggota ORDER BY id DESC");
 
 if (isset($_POST['submit'])) {
   $id = $_POST['id'];

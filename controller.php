@@ -84,6 +84,212 @@ if (isset($_POST['req'])) {
 
 		}
 	}
+
+	if ($_POST['req'] == 'laporanInspeksi') {
+		$priode = mysqli_query($conn, "SELECT * FROM tb_priode_laporan ORDER BY id DESC");
+		$prd = mysqli_fetch_assoc($priode);
+		$priode_mulai = strtotime($prd['tanggal_mulai']);
+		$priode_akhir = strtotime($prd['tanggal_akhir']);
+
+		$anggota_id = $_POST['anggota_id'];
+		$anggota = mysqli_query($conn, "SELECT * FROM tb_anggota WHERE id='$anggota_id'");
+		$agt = mysqli_fetch_assoc($anggota);
+		$pengerjaan = mysqli_query($conn, "SELECT * FROM tb_pengerjaan WHERE anggota_id='$anggota_id'");
+		$nomor_tiang = [];
+		$dt_table = '';
+		$no = 1;
+		foreach ($pengerjaan as $pgr) {
+			$pgr_mulai = strtotime($pgr['tggl_mulai']);
+			$pgr_selesai = strtotime($pgr['tggl_selesai']);
+			if ($priode_mulai < $pgr_mulai && $priode_akhir > $pgr_mulai || $priode_mulai < $pgr_selesai && $priode_akhir > $pgr_selesai) {
+				$pgr_id = $pgr['id'];
+				$kegiatan = mysqli_query($conn, "SELECT * FROM tb_kegiatan WHERE pengerjaan_id='$pgr_id' AND status='accept' ORDER BY id DESC");
+				foreach ($kegiatan as $kgt) {
+					$kgt_mulai = strtotime($kgt['waktu_mulai']);
+					$kgt_selesai = strtotime($kgt['waktu_selesai']);
+					if ($priode_mulai < $kgt_mulai && $priode_akhir > $kgt_mulai || $priode_mulai < $kgt_selesai && $priode_akhir > $kgt_selesai) {
+						// Priode
+						$tggl_mulai = new DateTime($pgr['tggl_mulai']);
+						$tggl_selesai = new DateTime($pgr['tggl_selesai']);
+						$tggl = $tggl_mulai->diff($tggl_selesai)->days;
+						if ($tggl >= 25) $priode = 'Bulanan';
+						else if ($tggl >= 6) $priode = 'Mingguan';
+						else if ($tggl >= 0) $priode = 'Harian';
+
+						// data table
+						$dt_table .= '
+						<tr>
+						<td>'.$no.'</td>
+						<td>'.$pgr['unit'].'</td>
+						<td>'.$pgr['gardu_induk'].'</td>
+						<td>'.$pgr['formulir'].'</td>
+						<td>'.$priode.'</td>
+						<td>'.$agt['nama'].'</td>
+						<td>'.date('d-m-y', strtotime($kgt['waktu_mulai'])).'</td>
+						<td>'.$kgt['total_kerusakan'].'</td>
+						<td>'.$kgt['durasi'].'</td>
+						</tr>';
+
+						$no=$no+1;
+					}
+				}
+				$nomor_tiang[] = $pgr['nomor_tiang'];
+			}
+		} 
+
+		echo json_encode([
+			'unit' => $pgr['unit'],
+			'gardu_induk' => $pgr['gardu_induk'],
+			'nomor_tiang' => implode(', ', $nomor_tiang),
+			'anggota' => $agt['nama'],
+			'priode' => date('d-m-y', $priode_mulai).' - '.date('d-m-y', $priode_akhir),
+			'priode_mulai' => date('d-m-Y', $priode_mulai),
+			'priode_akhir' => date('d-m-Y', $priode_akhir),
+			'export' => date('d-m-Y'),
+			'dt_table' => $dt_table
+		]);
+	}
+
+	if ($_POST['req'] == 'inspeksiFormulir') {
+		$priode = mysqli_query($conn, "SELECT * FROM tb_priode_laporan ORDER BY id DESC");
+		$prd = mysqli_fetch_assoc($priode);
+		$priode_mulai = strtotime($prd['tanggal_mulai']);
+		$priode_akhir = strtotime($prd['tanggal_akhir']);
+
+		$anggota_id = $_POST['anggota_id'];
+		$anggota = mysqli_query($conn, "SELECT * FROM tb_anggota WHERE id='$anggota_id'");
+		$agt = mysqli_fetch_assoc($anggota);
+		$pengerjaan = mysqli_query($conn, "SELECT * FROM tb_pengerjaan WHERE anggota_id='$anggota_id'");
+		$nomor_tiang = [];
+		$dt_table = '';
+		$no = 1;
+		foreach ($pengerjaan as $pgr) {
+			$pgr_mulai = strtotime($pgr['tggl_mulai']);
+			$pgr_selesai = strtotime($pgr['tggl_selesai']);
+			if ($priode_mulai < $pgr_mulai && $priode_akhir > $pgr_mulai || $priode_mulai < $pgr_selesai && $priode_akhir > $pgr_selesai) {
+				$pgr_id = $pgr['id'];
+				$kegiatan = mysqli_query($conn, "SELECT * FROM tb_kegiatan WHERE pengerjaan_id='$pgr_id' AND status='accept' ORDER BY id DESC");
+				foreach ($kegiatan as $kgt) {
+					$kgt_mulai = strtotime($kgt['waktu_mulai']);
+					$kgt_selesai = strtotime($kgt['waktu_selesai']);
+					if ($priode_mulai < $kgt_mulai && $priode_akhir > $kgt_mulai || $priode_mulai < $kgt_selesai && $priode_akhir > $kgt_selesai) {
+						// Priode
+						$tggl_mulai = new DateTime($pgr['tggl_mulai']);
+						$tggl_selesai = new DateTime($pgr['tggl_selesai']);
+						$tggl = $tggl_mulai->diff($tggl_selesai)->days;
+						if ($tggl >= 25) $priode = 'Bulanan';
+						else if ($tggl >= 6) $priode = 'Mingguan';
+						else if ($tggl >= 0) $priode = 'Harian';
+
+						// data table
+						$dt_table .= '
+						<tr>
+						<td>'.$no.'</td>
+						<td>'.$pgr['formulir'].'</td>
+						<td>'.$pgr['keterangan'].'</td>
+						<td>'.$kgt['sasaran'].'</td>
+						<td>
+						<img src="../assets/images/foto_kegiatan/'.$kgt['foto_kegiatan'].'" width="200">
+						</td>
+						</tr>';
+
+						$no=$no+1;
+					}
+				}
+				$nomor_tiang[] = $pgr['nomor_tiang'];
+			}
+		} 
+
+		echo json_encode([
+			'unit' => $pgr['unit'],
+			'gardu_induk' => $pgr['gardu_induk'],
+			'nomor_tiang' => implode(', ', $nomor_tiang),
+			'anggota' => $agt['nama'],
+			'priode' => date('d-m-y', $priode_mulai).' - '.date('d-m-y', $priode_akhir),
+			'priode_mulai' => date('d-m-Y', $priode_mulai),
+			'priode_akhir' => date('d-m-Y', $priode_akhir),
+			'export' => date('d-m-Y'),
+			'dt_table1' => $dt_table
+		]);
+	}
+
+	if ($_POST['req'] == 'detailLaporan') {
+		$priode = mysqli_query($conn, "SELECT * FROM tb_priode_laporan ORDER BY id DESC");
+		$prd = mysqli_fetch_assoc($priode);
+		$priode_mulai = strtotime($prd['tanggal_mulai']);
+		$priode_akhir = strtotime($prd['tanggal_akhir']);
+
+		$anggota_id = $_POST['anggota_id'];
+		$anggota = mysqli_query($conn, "SELECT * FROM tb_anggota WHERE id='$anggota_id'");
+		$agt = mysqli_fetch_assoc($anggota);
+		$pengerjaan = mysqli_query($conn, "SELECT * FROM tb_pengerjaan WHERE anggota_id='$anggota_id'");
+		$nomor_tiang = [];
+		$dtl_table = '';
+		$dtl_table1 = '';
+		$no = 1;
+		foreach ($pengerjaan as $pgr) {
+			$pgr_mulai = strtotime($pgr['tggl_mulai']);
+			$pgr_selesai = strtotime($pgr['tggl_selesai']);
+			if ($priode_mulai < $pgr_mulai && $priode_akhir > $pgr_mulai || $priode_mulai < $pgr_selesai && $priode_akhir > $pgr_selesai) {
+				$pgr_id = $pgr['id'];
+				$kegiatan = mysqli_query($conn, "SELECT * FROM tb_kegiatan WHERE pengerjaan_id='$pgr_id' AND status='accept' ORDER BY id DESC");
+				foreach ($kegiatan as $kgt) {
+					$kgt_mulai = strtotime($kgt['waktu_mulai']);
+					$kgt_selesai = strtotime($kgt['waktu_selesai']);
+					if ($priode_mulai < $kgt_mulai && $priode_akhir > $kgt_mulai || $priode_mulai < $kgt_selesai && $priode_akhir > $kgt_selesai) {
+						// Priode
+						$tggl_mulai = new DateTime($pgr['tggl_mulai']);
+						$tggl_selesai = new DateTime($pgr['tggl_selesai']);
+						$tggl = $tggl_mulai->diff($tggl_selesai)->days;
+						if ($tggl >= 25) $priode = 'Bulanan';
+						else if ($tggl >= 6) $priode = 'Mingguan';
+						else if ($tggl >= 0) $priode = 'Harian';
+
+						// data table
+						$dtl_table .= '
+						<tr>
+						<td>'.$no.'</td>
+						<td>'.$pgr['unit'].'</td>
+						<td>'.$pgr['gardu_induk'].'</td>
+						<td>'.$pgr['formulir'].'</td>
+						<td>'.$priode.'</td>
+						<td>'.$agt['nama'].'</td>
+						<td>'.date('d-m-y', strtotime($kgt['waktu_mulai'])).'</td>
+						<td>'.$kgt['total_kerusakan'].'</td>
+						<td>'.$kgt['durasi'].'</td>
+						</tr>';
+
+						$dtl_table1 .= '
+						<tr>
+						<td>'.$no.'</td>
+						<td>'.$pgr['formulir'].'</td>
+						<td>'.$pgr['keterangan'].'</td>
+						<td>'.$kgt['sasaran'].'</td>
+						<td>
+						<img src="../assets/images/foto_kegiatan/'.$kgt['foto_kegiatan'].'" width="150">
+						</td>
+						</tr>';
+
+						$no=$no+1;
+					}
+				}
+				$nomor_tiang[] = $pgr['nomor_tiang'];
+			}
+		} 
+
+		echo json_encode([
+			'unit' => $pgr['unit'],
+			'gardu_induk' => $pgr['gardu_induk'],
+			'nomor_tiang' => implode(', ', $nomor_tiang),
+			'anggota' => $agt['nama'],
+			'priode' => date('d-m-y', $priode_mulai).' - '.date('d-m-y', $priode_akhir),
+			'priode_mulai' => date('d-m-Y', $priode_mulai),
+			'priode_akhir' => date('d-m-Y', $priode_akhir),
+			'export' => date('d-m-Y'),
+			'dtl_table' => $dtl_table,
+			'dtl_table1' => $dtl_table1,
+		]);
+	}
 }
 
 ?>

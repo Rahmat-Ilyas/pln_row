@@ -6,6 +6,9 @@ if (!isset($_SESSION['login_kldevis'])) header("location: ../login.php");
 $kegiatan = mysqli_query($conn, "SELECT * FROM tb_kegiatan WHERE status='proccess'");
 $kgt_new = mysqli_num_rows($kegiatan);
 
+$anggota_new = mysqli_query($conn, "SELECT * FROM tb_anggota WHERE status='new'");
+$agt_new = mysqli_num_rows($anggota_new);
+
 $kp_devisi = mysqli_query($conn, "SELECT * FROM tb_kepaladevisi");
 $kdv = mysqli_fetch_assoc($kp_devisi);
 
@@ -169,7 +172,13 @@ if (isset($_POST['update_akun'])) {
                 </li>
 
                 <li class="has_sub">
-                  <a href="data-anggota.php" class="waves-effect"><i class="ti-id-badge"></i> <span> Data Anggota </span> </a>
+                  <a href="data-anggota.php" class="waves-effect">
+                    <i class="ti-id-badge"></i>
+                    <span> Data Anggota</span>
+                    <?php if ($agt_new > 0) {  ?>
+                      <span class="badge badge-xs badge-danger" style="font-size: 11px; margin-top: -20px;"><?= $agt_new ?></span>
+                    <?php } ?>
+                  </a>
                 </li>
 
               </ul>

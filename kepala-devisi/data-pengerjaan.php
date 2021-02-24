@@ -283,7 +283,7 @@ $pngrjaan = mysqli_query($conn, "SELECT * FROM tb_pengerjaan ORDER BY id DESC");
         </div>
       </div>
 
-      <!-- modal refuse -->
+      <!-- modal hapus -->
       <div class="modal modal-hapus" id="modal-hapus<?= $dta['id'] ?>" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
         <div class="modal-dialog">
           <div class="modal-content">
@@ -296,7 +296,7 @@ $pngrjaan = mysqli_query($conn, "SELECT * FROM tb_pengerjaan ORDER BY id DESC");
             <div class="modal-body">
               Semua data kegiatan di pengerjaan ini akan ikut terhapus! (<?= $total_kegiatan ?> Kegiatan)
             </div>
-            <div class="modal-footer bg-whitesmoke br">
+            <div class="modal-footer">
               <a href="data-pengerjaan.php?delete=<?= $dta['id'] ?>" role="button" class="btn btn-danger">Hapus</a>
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
             </div>
