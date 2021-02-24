@@ -42,7 +42,7 @@ $priode_akhir = strtotime($prd['tanggal_akhir']);
                     <th>Nama Anggota</th>
                     <th>Jmlh Pengerjaan</th>
                     <th>Jmlh Kegiatan</th>
-                    <th width="235">Aksi</th>
+                    <th width="270">Aksi</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -77,7 +77,21 @@ $priode_akhir = strtotime($prd['tanggal_akhir']);
                         <td><?= $jum_kegiatan ?> Kegiatan</td>
                         <td class="text-center">
                           <a href="#" class="btn btn-sm btn-info" data-toggle="modal" data-target="#modal-edit<?= $dta['id'] ?>"><i class="fa fa-list"></i>&nbsp; Detail Laporan</a>
-                          <a href="#" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-edit<?= $dta['id'] ?>"><i class="fa fa-print"></i>&nbsp; Cetak Laporan</a>
+                          <div class="btn-group">
+                            <button type="button" class="btn btn-pink dropdown-toggle waves-effect waves-light" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-print"></i> Print Laporan <span class="caret"></span></button>
+                            <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                              <li>
+                                <a href="#" id="print-inspeksi">
+                                  <i class="fa fa-file-excel-o"></i> Laporan Inspeksi
+                                </a>
+                              </li>
+                              <li>
+                                <a href="#" id="print-formulir">
+                                  <i class="fa fa-file-pdf-o"></i> Laporan Inspeksi Formulir
+                                </a>
+                              </li>
+                            </ul>
+                          </div>
                         </td>
                       </tr>
                       <?php $no=$no+1; } 
@@ -92,12 +106,98 @@ $priode_akhir = strtotime($prd['tanggal_akhir']);
     </div>
   </div>
 
+  <div id="inspeksi" class="bg-white" hidden="">
+    <h2 class="text-center">LAPORAN INSPEKSI</h2>
+    <div class="row"> 
+      <div class="col-sm-1" style="width: 8%; float: left;">
+        <img src="../assets/images/pln_logo.png" height="80">
+      </div>
+      <div class="col-sm-3" style="width: 35%; float: left;">
+        <span>UNIT: UPT SISTEM SULSELRABAR</span><br>
+        <span>GARDU INDUK: GUDANG UPT SULSELRABAR</span><br>
+        <span>PENGHANTAR: -</span><br>
+        <span>TOWER/JOIN: 2</span><br>
+      </div>
+      <div class="col-sm-3" style="width: 32%; float: left;">
+        <span>GROUNDPATROL: RUSLAN</span><br>
+        <span>PRIODE: -</span><br>
+        <span>DARI: 01-05-2020</span><br>
+        <span>SAMPAI: 31-05-2020</span><br>
+      </div>
+      <div class="col-sm-3" style="width: 25%; float: left;">
+        <span>EXPORT TANGGAL: <?= date('d-m-Y') ?></span>      
+      </div>
+    </div>
+    <table id="datatable" class="table table-striped table-bordered">
+      <thead>
+        <tr>
+          <th width="10">No</th>
+          <th>UNIT</th>
+          <th>GARDU INDUK</th>
+          <th>FORMULIR</th>
+          <th>PRIODE</th>
+          <th>GROUNDPATROL</th>
+          <th>TANGGAL</th>
+          <th>TOTAL KERUSAKAN</th>
+          <th>DURASI (MENIT)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td>UPT SISTEM SULSELRABAR</td>
+          <td>GUDANG UPT SULSELRABAR</td>
+          <td>TOWE DAN SPAN</td>
+          <td>TRIWULAN</td>
+          <td>RUSLAN</td>
+          <td>21-MAY-20</td>
+          <td>1</td>
+          <td>6.57</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div id="inspeksi-formulir" class="bg-white" hidden="">
+    <h2 class="text-center">LAPORAN INSPEKSI FORMULIR MANDOR LINE</h2>
+    <table id="datatable" class="table table-striped table-bordered">
+      <thead>
+        <tr>
+          <th width="10">No</th>
+          <th>KOMPONEN/ FORMULIR</th>
+          <th>KETERANGAN</th>
+          <th>SASARAN PEMERIKSAAN</th>
+          <th>FOTO</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td>Tangga Panjat</td>
+          <td>Komponen ini berfun untuk memberikan sesuatu yang sangat melakuannv</td>
+          <td>Periksa kondisi untuk panjat</td>
+          <td>
+            <img src="../assets/images/pln_logo.png" width="200">
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
   <?php
   require('template/footer.php');
   ?>
 
   <script type="text/javascript">
     $(document).ready(function($) {
+      $('#print-inspeksi').click(function(event) {
+        $('#inspeksi').printArea();
+      });
+
+      $('#print-formulir').click(function(event) {
+        $('#inspeksi-formulir').printArea();
+      });
+
       <?php if (isset($response) && $response['status'] == 'success') { ?>
         Swal.fire({
           title: 'Berhasil Diupdte',

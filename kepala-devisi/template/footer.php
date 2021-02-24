@@ -36,6 +36,7 @@
 <script src="../assets/js/jquery.core.js"></script>
 <script src="../assets/js/jquery.app.js"></script>
 <script src="../assets/plugins/sweetalert2/sweetalert2.all.min.js"></script>
+<script src="../assets/js/jquery.PrintArea.js"></script>
 
 <!-- Google Maps -->
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBhUwwpTQamL6ZhPKT2x2j2nI-eWNR8bZ0&callback=initialize&libraries=&v=weekly"
