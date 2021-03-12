@@ -16,9 +16,46 @@ foreach ($pngrjaan as $pgr) {
   }
 }
 
+// Tambah Kegiatan
 if (isset($_POST['addKegiatan'])) {
   $_POST['status'] = 'new';
   $res = add_data('tb_kegiatan', $_POST);
+}
+
+// Update Kegiatan
+if (isset($_POST['subUpdate'])) {
+  $id = $_POST['id'];
+  $sasaran = $_POST['sasaran'];
+
+  $query = "UPDATE tb_kegiatan SET sasaran='$sasaran' WHERE id='$id'";
+  if (mysqli_query($conn, $query)) {
+    $res = [
+      'status' => 'update',
+      'message' => 'Data berhasil di diperbaharui',
+    ];
+  } else { 
+    $res = [
+      'status' => 'error',
+      'message' => mysqli_error($conn),
+    ];
+  }
+}
+
+// DELETE KEGIATAN
+if (isset($_GET['delete'])) {
+  $id = $_GET['delete'];
+  $query = "DELETE FROM tb_kegiatan WHERE id='$id'";
+  if (mysqli_query($conn, $query)) {
+    $res = [
+      'status' => 'delete',
+      'message' => 'Data berhasil di hapus',
+    ];
+  } else { 
+    $res = [
+      'status' => 'error',
+      'message' => mysqli_error($conn),
+    ];
+  }
 }
 ?>
 
@@ -129,6 +166,13 @@ if (isset($_POST['addKegiatan'])) {
                             </div>
                             <hr>
                             <a href="#" class="btn btn-success" id="btn-upload" data-toggle="modal" data-target="#modal-upload" data-toggle1="tooltip" title="" data-original-title="Upload Foto Kegiatan Untuk Menyelesaikan" data-id="<?= $kgt['id'] ?>"><i class="md-camera-alt"></i> Upload Foto & Selesaikan</a>
+                            <div class="btn-group">
+                              <button type="button" class="btn btn-primary dropdown-toggle waves-effect waves-light" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-wrench"></i> Proses Kegiatan<span class="caret"></span></button>
+                              <ul class="dropdown-menu" role="menu">
+                                <li><a href="#" data-toggle="modal" data-target="#modal-edit<?= $kgt['id'] ?>"><i class="fa fa-edit"></i> Update</a></li>
+                                <li><a href="#" data-toggle="modal" data-target="#modal-hapus<?= $kgt['id'] ?>" > <i class="fa fa-trash"></i> Hapus</a></li>
+                              </ul>
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -458,6 +502,54 @@ if (isset($_POST['addKegiatan'])) {
           $pengerjaan_id = $dta['id'];
           $kegiatan = mysqli_query($conn, "SELECT * FROM tb_kegiatan WHERE pengerjaan_id='$pengerjaan_id'");
           foreach ($kegiatan as $kgt) {  ?>
+            <!-- modal edit -->
+            <div class="modal fade" tabindex="-1" role="dialog" id="modal-edit<?= $kgt['id'] ?>">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabel">Update Data Kegiatan</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body" style="padding: 20px 50px 0 50px">
+                    <form method="POST">
+                      <div class="form-group">
+                        <label class="col-form-label">Sasaran Pemeriksaan</label>
+                        <input type="hidden" name="id" value="<?= $kgt['id'] ?>">
+                        <textarea class="form-control" required="" placeholder="Sasaran Pemeriksaan..." name="sasaran" rows="5"><?= $kgt['sasaran'] ?></textarea>
+                      </div>
+                      <div class="form-group">
+                        <button type="submit" name="subUpdate" class="btn btn-primary">Update</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- modal hapus -->
+            <div class="modal" id="modal-hapus<?= $kgt['id'] ?>" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h4 class="modal-title">Yakin ingin menghapus?</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">×</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    Lanjutkan menghapus data kegiatan ini?
+                  </div>
+                  <div class="modal-footer bg-whitesmoke br">
+                    <a href="data-kegiatan.php?delete=<?= $kgt['id'] ?>" role="button" class="btn btn-danger">Hapus</a>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
             <!-- modal foto -->
             <div class="modal" id="modal-foto<?= $kgt['id'] ?>" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
               <div class="modal-dialog">
@@ -601,6 +693,20 @@ if (isset($_POST['addKegiatan'])) {
                 text: "<?= $res['message'] ?>",
                 type: 'error'
               });
+            <?php }  else if (isset($res) && $res['status'] == 'delete') { ?>
+              Swal.fire({
+                title: 'Berhasil Dihapus',
+                text: "<?= $res['message'] ?>",
+                type: 'success'
+              });
+              window.history.pushState('', '', "data-kegiatan.php")
+            <?php } else if (isset($res) && $res['status'] == 'update') { ?>
+              Swal.fire({
+                title: 'Berhasil Diupdate',
+                text: "<?= $res['message'] ?>",
+                type: 'success'
+              });
+              window.history.pushState('', '', "data-kegiatan.php")
             <?php } ?>
           });
         </script>

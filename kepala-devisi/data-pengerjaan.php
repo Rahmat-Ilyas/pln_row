@@ -9,6 +9,10 @@ if (isset($_GET['delete'])) {
     $kegiatan = mysqli_query($conn, "SELECT * FROM tb_kegiatan WHERE pengerjaan_id='$id'");
     foreach ($kegiatan as $kgt) {
       $kgt_id = $kgt['id'];
+      if ($kgt['foto_kegiatan']) {
+        $target = "../assets/images/foto_kegiatan/".$kgt['foto_kegiatan'];
+        if (file_exists($target)) unlink($target);
+      }
       mysqli_query($conn, "DELETE FROM tb_kegiatan WHERE id='$kgt_id'");
     }
 
