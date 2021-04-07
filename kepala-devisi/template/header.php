@@ -135,7 +135,7 @@ if (isset($_POST['update_akun'])) {
                 <li class="has_sub">
                   <a href="javascript:void(0);" class="waves-effect">
                     <i class="fa fa-table"></i>
-                    <span>Pngerjaan & Kegiatan</span> 
+                    <span>Pengerjaan & Kegiatan</span> 
                     <?php if ($kgt_new > 0) {  ?>
                       <span class="badge badge-xs badge-danger pull-right" style="font-size: 11px; margin-top: -28px;"><?= $kgt_new ?></span>
                     <?php } else { ?>
@@ -164,7 +164,7 @@ if (isset($_POST['update_akun'])) {
                 </li>
 
                 <li class="has_sub">
-                  <a href="priode-laporan.php" class="waves-effect"><i class="fa fa-calendar"></i><span> Priode Laporan </span> </a>
+                  <a href="priode-laporan.php" class="waves-effect"><i class="fa fa-calendar"></i><span> Periode Laporan </span> </a>
                 </li>
 
                 <li class="has_sub">

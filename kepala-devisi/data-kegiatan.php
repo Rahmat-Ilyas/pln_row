@@ -40,7 +40,7 @@ if (isset($_GET['delete'])) {
                 <a href="#">Kepala Devisi</a>
               </li>
               <li class="active">
-                Pnengerjaan & Kegiatan
+                Penengerjaan & Kegiatan
               </li>
               <li class="active">
                 Data Kegiatan

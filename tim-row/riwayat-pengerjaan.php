@@ -45,7 +45,7 @@ foreach ($pengerjaan as $pgr) {
                   <div class="panel-heading"> 
                     <h4 class="panel-title"> 
                       <a data-toggle="collapse" data-parent="#accordion-test-2" href="#collapseOne<?= $res['id'] ?>" aria-expanded="false" class="collapsed">
-                        <?= $no ?>. PRIODE LAPORAN: <?= date('d M Y', strtotime($res['tanggal_mulai'])).' - '.date('d M Y', strtotime($res['tanggal_akhir'])) ?>
+                        <?= $no ?>. PERIODE LAPORAN: <?= date('d M Y', strtotime($res['tanggal_mulai'])).' - '.date('d M Y', strtotime($res['tanggal_akhir'])) ?>
                       </a> 
                     </h4> 
                   </div> 
@@ -58,7 +58,7 @@ foreach ($pengerjaan as $pgr) {
                             <th width="10">No</th>
                             <th>Komponen</th>
                             <th>Nomoe Tiang</th>
-                            <th>Waktu/Priode</th>
+                            <th>Waktu/Periode</th>
                             <th>Lokasi</th>
                             <th>Total Kegiatan</th>
                             <th>Keterangan</th>
@@ -77,7 +77,7 @@ foreach ($pengerjaan as $pgr) {
                             $pgr_mulai = strtotime($pgr['tggl_mulai']);
                             $pgr_selesai = strtotime($pgr['tggl_selesai']);
                             if ($priode_mulai < $pgr_mulai && $priode_akhir > $pgr_mulai || $priode_mulai < $pgr_selesai && $priode_akhir > $pgr_selesai) { 
-                              // Priode
+                              // Periode
                               $tggl_mulai = new DateTime($pgr['tggl_mulai']);
                               $tggl_selesai = new DateTime($pgr['tggl_selesai']);
                               $tggl = $tggl_mulai->diff($tggl_selesai)->days;
@@ -126,7 +126,7 @@ foreach ($pengerjaan as $pgr) {
 </div>
 
 <?php foreach ($pengerjaan as $dta) { 
-    // Priode
+    // Periode
   $tggl_mulai = new DateTime($dta['tggl_mulai']);
   $tggl_selesai = new DateTime($dta['tggl_selesai']);
   $tggl = $tggl_mulai->diff($tggl_selesai)->days;

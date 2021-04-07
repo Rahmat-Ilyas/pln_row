@@ -61,7 +61,7 @@ if (isset($_POST['submitRefuse'])) {
                 <a href="#">Kepala Devisi</a>
               </li>
               <li class="active">
-                Pnengerjaan & Kegiatan
+                Penengerjaan & Kegiatan
               </li>
               <li class="active">
                 Kegiatan Baru

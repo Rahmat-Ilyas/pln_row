@@ -78,7 +78,7 @@ if (isset($_GET['delete'])) {
     <div class="row">
       <div class="col-sm-12">
         <div class="card-box table-responsive">
-          <h4 class="m-t-0 header-title"><b>Data Kegiatan (Priode: <?= date('d M y', strtotime($prd['tanggal_mulai']))?> - <?= date('d M y', strtotime($prd['tanggal_akhir'])) ?>)</b></h4>
+          <h4 class="m-t-0 header-title"><b>Data Kegiatan (Periode: <?= date('d M y', strtotime($prd['tanggal_mulai']))?> - <?= date('d M y', strtotime($prd['tanggal_akhir'])) ?>)</b></h4>
           <a href="#" class="m-t-10 btn btn-default add-kegiatan" data-toggle="modal" data-target="#modal-add-kegiatan" data-toggle1="tooltip" title="" data-original-title="Tambah Kegiatan Pengerjaan" data-id="<?= $dta['id'] ?>"><i class="md-my-library-add"></i> Tambah Kegiatan</a>
 
           <hr>

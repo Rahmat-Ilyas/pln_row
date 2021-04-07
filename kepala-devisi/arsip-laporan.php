@@ -30,7 +30,7 @@ $prd = mysqli_fetch_assoc($priode);
         <div class="row">
           <div class="col-sm-12">
             <div class="card-box table-responsive">
-              <h4 class="m-t-0 header-title"><b>Data Laporan per priode</b></h4>
+              <h4 class="m-t-0 header-title"><b>Data Laporan per periode</b></h4>
               <div class="panel-group" id="accordion-test-2"> 
                 <?php $xn=1; foreach ($priode as $prd) { 
                   $priode_mulai = strtotime($prd['tanggal_mulai']);
@@ -39,7 +39,7 @@ $prd = mysqli_fetch_assoc($priode);
                     <div class="panel-heading"> 
                       <h4 class="panel-title"> 
                         <a data-toggle="collapse" data-parent="#accordion-test-2" href="#collapseOne<?= $prd['id'] ?>" aria-expanded="false" class="collapsed">
-                          <?= $xn ?>. PRIODE LAPORAN: <?= date('d M Y', strtotime($prd['tanggal_mulai'])).' - '.date('d M Y', strtotime($prd['tanggal_akhir'])) ?>
+                          <?= $xn ?>. PERIODE LAPORAN: <?= date('d M Y', strtotime($prd['tanggal_mulai'])).' - '.date('d M Y', strtotime($prd['tanggal_akhir'])) ?>
                         </a> 
                       </h4> 
                     </div> 
@@ -52,8 +52,8 @@ $prd = mysqli_fetch_assoc($priode);
                               <th width="10">No</th>
                               <th>NIP</th>
                               <th>Nama Anggota</th>
-                              <th>Jmlh Pengerjaan</th>
-                              <th>Jmlh Kegiatan</th>
+                              <th>Jumlah Pengerjaan</th>
+                              <th>Jumlah Kegiatan</th>
                               <th width="270">Aksi</th>
                             </tr>
                           </thead>
@@ -149,7 +149,7 @@ $prd = mysqli_fetch_assoc($priode);
               </div>
               <div class="col-sm-3" style="width: 32%; float: left;">
                 <span>GROUNDPATROL: </span><span class="anggota"></span><br>
-                <span>PRIODE: </span><span class="priode"></span><br>
+                <span>PERIODE: </span><span class="priode"></span><br>
                 <span>DARI: </span><span class="priode_mulai"></span><br>
                 <span>SAMPAI: </span><span class="priode_akhir"></span><br>
               </div>
@@ -164,7 +164,7 @@ $prd = mysqli_fetch_assoc($priode);
                   <th>UNIT</th>
                   <th>GARDU INDUK</th>
                   <th>FORMULIR</th>
-                  <th>PRIODE</th>
+                  <th>PERIODE</th>
                   <th>GROUNDPATROL</th>
                   <th>TANGGAL</th>
                   <th>TOTAL KERUSAKAN</th>
@@ -191,7 +191,7 @@ $prd = mysqli_fetch_assoc($priode);
               </div>
               <div class="col-sm-3" style="width: 32%; float: left;">
                 <span>GROUNDPATROL: </span><span class="anggota"></span><br>
-                <span>PRIODE: </span><span class="priode"></span><br>
+                <span>PERIODE: </span><span class="priode"></span><br>
                 <span>DARI: </span><span class="priode_mulai"></span><br>
                 <span>SAMPAI: </span><span class="priode_akhir"></span><br>
               </div>
@@ -236,7 +236,7 @@ $prd = mysqli_fetch_assoc($priode);
       </div>
       <div class="col-sm-3" style="width: 32%; float: left;">
         <span>GROUNDPATROL: </span><span class="anggota"></span><br>
-        <span>PRIODE: </span><span class="priode"></span><br>
+        <span>PERIODE: </span><span class="priode"></span><br>
         <span>DARI: </span><span class="priode_mulai"></span><br>
         <span>SAMPAI: </span><span class="priode_akhir"></span><br>
       </div>
@@ -251,7 +251,7 @@ $prd = mysqli_fetch_assoc($priode);
           <th>UNIT</th>
           <th>GARDU INDUK</th>
           <th>FORMULIR</th>
-          <th>PRIODE</th>
+          <th>PERIODE</th>
           <th>GROUNDPATROL</th>
           <th>TANGGAL</th>
           <th>TOTAL KERUSAKAN</th>
@@ -278,7 +278,7 @@ $prd = mysqli_fetch_assoc($priode);
       </div>
       <div class="col-sm-3" style="width: 32%; float: left;">
         <span>GROUNDPATROL: </span><span class="anggota"></span><br>
-        <span>PRIODE: </span><span class="priode"></span><br>
+        <span>PERIODE: </span><span class="priode"></span><br>
         <span>DARI: </span><span class="priode_mulai"></span><br>
         <span>SAMPAI: </span><span class="priode_akhir"></span><br>
       </div>

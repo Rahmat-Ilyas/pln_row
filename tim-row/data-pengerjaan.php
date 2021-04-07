@@ -91,11 +91,11 @@ if (isset($_GET['delete'])) {
     <div class="row">
       <div class="col-sm-12">
         <div class="card-box table-responsive">
-          <h4 class="m-t-0 header-title"><b>Data Pengerjaan (Priode: <?= date('d M y', strtotime($prd['tanggal_mulai']))?> - <?= date('d M y', strtotime($prd['tanggal_akhir'])) ?>)</b></h4>
+          <h4 class="m-t-0 header-title"><b>Data Pengerjaan (Periode: <?= date('d M y', strtotime($prd['tanggal_mulai']))?> - <?= date('d M y', strtotime($prd['tanggal_akhir'])) ?>)</b></h4>
           <hr>
           <div class="row">
             <?php $no = 1; foreach ($result as $dta) {
-              // Priode
+              // Periode
               $tggl_mulai = new DateTime($dta['tggl_mulai']);
               $tggl_selesai = new DateTime($dta['tggl_selesai']);
               $tggl = $tggl_mulai->diff($tggl_selesai)->days;
@@ -142,7 +142,7 @@ if (isset($_GET['delete'])) {
                         </span>
                       </div>
                       <div class="row">
-                        <b class="col-sm-4">Waktu/Priode </b>
+                        <b class="col-sm-4">Waktu/Periode </b>
                         <span class="col-sm-8">: <?= date('d M', strtotime($dta['tggl_mulai'])).' - '.date('d M', strtotime($dta['tggl_selesai'])) ?> (<?= $priode ?>)</span>
                       </div>
                       <div class="row">
@@ -245,7 +245,7 @@ if (isset($_GET['delete'])) {
   </div>
 
   <?php foreach ($result as $dta) { 
-    // Priode
+    // Periode
     $tggl_mulai = new DateTime($dta['tggl_mulai']);
     $tggl_selesai = new DateTime($dta['tggl_selesai']);
     $tggl = $tggl_mulai->diff($tggl_selesai)->days;

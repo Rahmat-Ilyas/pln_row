@@ -47,7 +47,7 @@ $pngrjaan = mysqli_query($conn, "SELECT * FROM tb_pengerjaan ORDER BY id DESC");
                 <a href="#">Kepala Devisi</a>
               </li>
               <li class="active">
-                Pnengerjaan & Kegiatan
+                Penengerjaan & Kegiatan
               </li>
               <li class="active">
                 Data Pengerjaan

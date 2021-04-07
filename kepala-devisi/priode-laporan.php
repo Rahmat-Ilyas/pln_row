@@ -48,7 +48,7 @@ if (isset($_POST['updtPriode'])) {
   if (mysqli_affected_rows($conn) > 0) {
     $response = [
       'status' => 'success',
-      'message' => 'Priode laporan berhasil di update',
+      'message' => 'Periode laporan berhasil di update',
     ];    
   } else { 
     $response = [
@@ -65,13 +65,13 @@ if (isset($_POST['updtPriode'])) {
         <!-- Page-Title -->
         <div class="row">
           <div class="col-sm-12">
-            <h4 class="page-title">Priode Laporan</h4>
+            <h4 class="page-title">Periode Laporan</h4>
             <ol class="breadcrumb">
               <li>
                 <a href="#">Kepala Devisi</a>
               </li>
               <li class="active">
-                Priode Laporan
+                Periode Laporan
               </li>
             </ol>
           </div>
@@ -83,27 +83,37 @@ if (isset($_POST['updtPriode'])) {
                 <div class="col-lg-5">
                   <div class="panel panel-border panel-primary">
                     <div class="panel-heading">
-                      <h3 class="panel-title">Priode Saat Ini</h3>
+                      <h3 class="panel-title">Periode Saat Ini</h3>
                     </div>
-                    <div class="panel-body row">
-                      <b class="col-sm-5">Tanggal Mulai</b>
-                      <span class="col-sm-7">: <?= date('d F Y', strtotime($prd['tanggal_mulai'])) ?></span>
-                      <b class="col-sm-5">Tanggal Akhir</b>
-                      <span class="col-sm-7">: <?= date('d F Y', strtotime($prd['tanggal_akhir'])) ?></span>
-                      <b class="col-sm-5">Tanggal Store</b>
-                      <span class="col-sm-7">: <?= date('d F Y', strtotime($prd['tanggal_stor'])) ?></span>
-                      <b class="col-sm-5">Jumlah Pengerjaan</b>
-                      <span class="col-sm-7">: <?= $jum_pengerjaan ?> Pengerjaan</span>
-                      <b class="col-sm-5">Jumlah Kegiatan</b>
-                      <span class="col-sm-7">: <?= $jum_kegiatan ?> Kegiatan</span>
+                    <div class="panel-body">
+                      <div class="row">
+                        <b class="col-sm-5">Tanggal Mulai: </b>
+                        <p class="col-sm-7"><?= date('d F Y', strtotime($prd['tanggal_mulai'])) ?></p>
+                      </div>
+                      <div class="row">
+                        <b class="col-sm-5">Tanggal Akhir: </b>
+                        <p class="col-sm-7"><?= date('d F Y', strtotime($prd['tanggal_akhir'])) ?></p>
+                      </div>
+                      <div class="row">
+                        <b class="col-sm-5">Tanggal Store: </b>
+                        <p class="col-sm-7"><?= date('d F Y', strtotime($prd['tanggal_stor'])) ?></p>
+                      </div>
+                      <div class="row">
+                        <b class="col-sm-5">Jumlah Pengerjaan: </b>
+                        <p class="col-sm-7"><?= $jum_pengerjaan ?> Pengerjaan</p>
+                      </div>
+                      <div class="row">
+                        <b class="col-sm-5">Jumlah Kegiatan: </b>
+                        <p class="col-sm-7"><?= $jum_kegiatan ?> Kegiatan</p>
+                      </div>
                       <div class="col-sm-12 m-t-10">
-                        <button class="btn btn-primary" id="btn-update"><i class="fa fa-calendar"></i> Perbaharui Priode Laporan</button>
+                        <button class="btn btn-primary" id="btn-update"><i class="fa fa-calendar"></i> Perbaharui Periode Laporan</button>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
-              <h4 class="m-t-0 header-title"><b>Data Priode Sebelumnya</b></h4>
+              <h4 class="m-t-0 header-title"><b>Data Periode Sebelumnya</b></h4>
               <table class="table table-striped table-bordered">
                 <thead>
                   <tr>
@@ -172,7 +182,7 @@ if (isset($_POST['updtPriode'])) {
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-        <h4 class="modal-title" id="myLargeModalLabel">Update Priode Laporan</h4>
+        <h4 class="modal-title" id="myLargeModalLabel">Update Periode Laporan</h4>
       </div>
       <div class="modal-body" style="padding: 20px 50px 0 50px">
         <form method="POST" action="#">
@@ -212,8 +222,8 @@ require('template/footer.php');
       var priodeLast = "<?= strtotime(date('Y-m-d', strtotime($prd['tanggal_akhir']))) ?>";
       if (priodeLast > thisDate) {
         Swal.fire({
-          title: 'Priode Sebelumnya Belum Berakhir!',
-          text: "Priode sebelumnya belum berakhir. Jika tetap melanjutak maka tanggal akhir untuk priode sebelumnya akan otomatis di update menjadi tanggal saat priode di update.",
+          title: 'Periode Sebelumnya Belum Berakhir!',
+          text: "Periode sebelumnya belum berakhir. Jika tetap melanjutak maka tanggal akhir untuk priode sebelumnya akan otomatis di update menjadi tanggal saat priode di update.",
           type: 'warning',
           showCancelButton: true,
           cancelButtonText: 'Batal',

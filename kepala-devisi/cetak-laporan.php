@@ -32,7 +32,7 @@ $priode_akhir = strtotime($prd['tanggal_akhir']);
         <div class="row">
           <div class="col-sm-12">
             <div class="card-box table-responsive">
-              <h4 class="m-t-0 header-title"><b>Data Laporan per priode: <?= date('d M y', $priode_mulai) ?> - <?= date('d M y', $priode_akhir) ?></b></h4>
+              <h4 class="m-t-0 header-title"><b>Data Laporan per periode: <?= date('d M y', $priode_mulai) ?> - <?= date('d M y', $priode_akhir) ?></b></h4>
 
               <table id="datatable" class="table table-striped table-bordered">
                 <thead>
@@ -40,8 +40,8 @@ $priode_akhir = strtotime($prd['tanggal_akhir']);
                     <th width="10">No</th>
                     <th>NIP</th>
                     <th>Nama Anggota</th>
-                    <th>Jmlh Pengerjaan</th>
-                    <th>Jmlh Kegiatan</th>
+                    <th>Jumlah Pengerjaan</th>
+                    <th>Jumlah Kegiatan</th>
                     <th width="270">Aksi</th>
                   </tr>
                 </thead>
@@ -131,7 +131,7 @@ $priode_akhir = strtotime($prd['tanggal_akhir']);
               </div>
               <div class="col-sm-3" style="width: 32%; float: left;">
                 <span>GROUNDPATROL: </span><span class="anggota"></span><br>
-                <span>PRIODE: </span><span class="priode"></span><br>
+                <span>PERIODE: </span><span class="priode"></span><br>
                 <span>DARI: </span><span class="priode_mulai"></span><br>
                 <span>SAMPAI: </span><span class="priode_akhir"></span><br>
               </div>
@@ -146,7 +146,7 @@ $priode_akhir = strtotime($prd['tanggal_akhir']);
                   <th>UNIT</th>
                   <th>GARDU INDUK</th>
                   <th>FORMULIR</th>
-                  <th>PRIODE</th>
+                  <th>PERIODE</th>
                   <th>GROUNDPATROL</th>
                   <th>TANGGAL</th>
                   <th>TOTAL KERUSAKAN</th>
@@ -173,7 +173,7 @@ $priode_akhir = strtotime($prd['tanggal_akhir']);
               </div>
               <div class="col-sm-3" style="width: 32%; float: left;">
                 <span>GROUNDPATROL: </span><span class="anggota"></span><br>
-                <span>PRIODE: </span><span class="priode"></span><br>
+                <span>PERIODE: </span><span class="priode"></span><br>
                 <span>DARI: </span><span class="priode_mulai"></span><br>
                 <span>SAMPAI: </span><span class="priode_akhir"></span><br>
               </div>
@@ -218,7 +218,7 @@ $priode_akhir = strtotime($prd['tanggal_akhir']);
       </div>
       <div class="col-sm-3" style="width: 32%; float: left;">
         <span>GROUNDPATROL: </span><span class="anggota"></span><br>
-        <span>PRIODE: </span><span class="priode"></span><br>
+        <span>PERIODE: </span><span class="priode"></span><br>
         <span>DARI: </span><span class="priode_mulai"></span><br>
         <span>SAMPAI: </span><span class="priode_akhir"></span><br>
       </div>
@@ -233,7 +233,7 @@ $priode_akhir = strtotime($prd['tanggal_akhir']);
           <th>UNIT</th>
           <th>GARDU INDUK</th>
           <th>FORMULIR</th>
-          <th>PRIODE</th>
+          <th>PERIODE</th>
           <th>GROUNDPATROL</th>
           <th>TANGGAL</th>
           <th>TOTAL KERUSAKAN</th>
@@ -260,7 +260,7 @@ $priode_akhir = strtotime($prd['tanggal_akhir']);
       </div>
       <div class="col-sm-3" style="width: 32%; float: left;">
         <span>GROUNDPATROL: </span><span class="anggota"></span><br>
-        <span>PRIODE: </span><span class="priode"></span><br>
+        <span>PERIODE: </span><span class="priode"></span><br>
         <span>DARI: </span><span class="priode_mulai"></span><br>
         <span>SAMPAI: </span><span class="priode_akhir"></span><br>
       </div>
