@@ -694,6 +694,7 @@ if (isset($_GET['delete'])) {
                 // Dropzone.forElement(".dropzone-previews").emit('complete', file[0]);
                 var blob = dataURItoBlob(data_uri);
                 blob.name = 'capture.jpg';
+                blob.lastModifiedDate = new Date();
                 Dropzone.forElement(".dropzone-previews").addFile(blob);
                 swal.close();
               });
