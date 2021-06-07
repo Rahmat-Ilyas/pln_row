@@ -43,6 +43,7 @@
 
 <!-- Page Specific JS Libraries -->
 <script src="../assets/plugins/dropzone/dropzone.js"></script>
+<script src="../assets/js/webcam.min.js"></script>
 
 <!-- Google Maps -->
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBhUwwpTQamL6ZhPKT2x2j2nI-eWNR8bZ0&callback=initialize&libraries=&v=weekly"

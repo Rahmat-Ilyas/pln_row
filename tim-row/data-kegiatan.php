@@ -482,6 +482,7 @@ if (isset($_GET['delete'])) {
                     <label class="col-form-label">Foto Pengerjaan</label>
                     <div class="dropzone dropzone-previews" id="my-awesome-dropzone"></div>
                     <input type="hidden" name="kegiatan_id" id="kegiatan_id">
+                    <a href="#" class="btn btn-sm btn-primary m-t-5" id="take-pic"><i class="fa fa-camera"></i> Ambil Gambar</a>
                   </div>
                   <div class="form-group">
                     <label class="col-form-label">Total Kerusakan</label>
@@ -489,7 +490,7 @@ if (isset($_GET['delete'])) {
                   </div>
                   <div class="form-group">
                     <button type="submit" name="addKegiatan" class="btn btn-default">Upload & Selesaikan</button>
-                    <button type="" class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Batal</button>
+                    <button type="" class="btn btn-secondary" data-dismiss="modal" aria-hidden="true">Batal</button>
                   </div>
                 </form>
               </div>
@@ -608,7 +609,6 @@ if (isset($_GET['delete'])) {
               accept: function(file, done) {
                 if (file) {
                   console.log(file);
-
                   var dt = new Date(file.lastModifiedDate);
                   var month = dt.getMonth()+1;
                   var date = dt.getDate();
@@ -641,6 +641,85 @@ if (isset($_GET['delete'])) {
               }
 
             });
+
+            Webcam.set({
+              width: 375,
+              height: 300,
+              image_format: 'jpeg',
+              jpeg_quality: 90
+            });
+
+            $('#take-pic').click(function(event) {
+              Swal.fire({
+                html: `<div id="my_camera"></div>
+                <div id="before-take">
+                <a href="#" class="btn btn-primary btn-lg" id="get-pic"><i class="fa fa-camera"></i> Foto</a>
+                </div>
+                <div id="after-take" hidden="" style="margin-top: 10px;">
+                <a href="#" class="btn btn-primary btn-lg" id="ret-pic"><i class="fa fa-undo"></i> Ganti</a>
+                <a href="#" class="btn btn-success btn-lg" id="upl-pic"><i class="fa fa-upload"></i> Upload</a>
+                </div>`,
+                width: '400px',
+                showCloseButton: true,
+                showCancelButton: false,
+                showConfirmButton: false,
+                onClose: function () {
+                  Webcam.reset();
+                }
+              });
+              Webcam.attach('#my_camera');
+            });
+
+            $(document).on('click', '#get-pic', function(e) {
+              e.preventDefault();
+              Webcam.freeze();
+              $(document).find('#before-take').attr('hidden', '');
+              $(document).find('#after-take').removeAttr('hidden');
+            });
+
+            $(document).on('click', '#ret-pic', function(e) {
+              e.preventDefault();
+              Webcam.unfreeze();
+              $(document).find('#before-take').removeAttr('hidden');
+              $(document).find('#after-take').attr('hidden', '');
+            });
+
+            $(document).on('click', '#upl-pic', function(e) {
+              e.preventDefault();
+              Webcam.snap( function(data_uri) {
+                $(document).find('#before-take').removeAttr('hidden');
+                $(document).find('#after-take').attr('hidden', '');
+
+                // Dropzone.forElement(".dropzone-previews").emit('thumbnail', file[0], data_uri);
+                // Dropzone.forElement(".dropzone-previews").emit('complete', file[0]);
+                var blob = dataURItoBlob(data_uri);
+                blob.name = 'capture.jpg';
+                Dropzone.forElement(".dropzone-previews").addFile(blob);
+                swal.close();
+              });
+              Webcam.reset();
+            });
+
+            function dataURItoBlob(dataURI) {
+              'use strict'
+              var byteString, 
+              mimestring 
+
+              if(dataURI.split(',')[0].indexOf('base64') !== -1 ) {
+                byteString = atob(dataURI.split(',')[1])
+              } else {
+                byteString = decodeURI(dataURI.split(',')[1])
+              }
+
+              mimestring = dataURI.split(',')[0].split(':')[1].split(';')[0]
+
+              var content = new Array();
+              for (var i = 0; i < byteString.length; i++) {
+                content[i] = byteString.charCodeAt(i)
+              }
+
+              return new Blob([new Uint8Array(content)], {type: mimestring});
+            }
 
             $('#formUpload').submit(function(event) {
               event.preventDefault();
