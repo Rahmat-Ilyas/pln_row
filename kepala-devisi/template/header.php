@@ -123,7 +123,7 @@ if (isset($_POST['update_akun'])) {
 
         <!-- ========== Left Sidebar Start ========== -->
 
-        <div class="left side-menu">
+        <div class="left side-menu" style="background-color: #fff;">
           <div class="sidebar-inner slimscrollleft">
             <!--- Divider -->
             <div id="sidebar-menu">
@@ -156,7 +156,7 @@ if (isset($_POST['update_akun'])) {
                 </li>
 
                 <li class="has_sub">
-                  <a href="javascript:void(0);" class="waves-effect"><i class="fa fa-file-text-o"></i><span> Kelola Laporan </span> <span class="menu-arrow"></span></a>
+                  <a href="javascript:void(0);" class="waves-effect"><i class="fa fa-file-text-o"></i><span> Laporan </span> <span class="menu-arrow"></span></a>
                   <ul class="list-unstyled">
                     <li><a href="cetak-laporan.php">Cetak Laporan</a></li>
                     <li><a href="arsip-laporan.php">Arsip Laporan</a></li>
