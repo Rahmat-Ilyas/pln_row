@@ -123,7 +123,7 @@ if (isset($_POST['update_akun'])) {
 
         <!-- ========== Left Sidebar Start ========== -->
 
-        <div class="left side-menu" style="background-color: #fff;">
+        <div class="left side-menu">
           <div class="sidebar-inner slimscrollleft">
             <!--- Divider -->
             <div id="sidebar-menu">

@@ -1280,7 +1280,7 @@ pre {
   z-index: 2;
 }
 .side-menu.left {
-  background: #36404a;
+  background: #4e73df;
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
   position: absolute;
   top: 60px;
@@ -1305,13 +1305,13 @@ body.fixed-left .side-menu.left {
 .button-menu-mobile {
   background: transparent;
   border: none;
-  color: #36404a;
+  color: #4e73df;
   font-size: 20px;
   line-height: 60px;
   padding: 0 15px;
 }
 .button-menu-mobile:hover {
-  color: #5fbeaa;
+  color: rgba(255, 255, 255, 0.7);
 }
 .sidebar-inner {
   height: 100%;
@@ -1349,10 +1349,10 @@ body.fixed-left .side-menu.left {
   border-top: 0;
 }
 #sidebar-menu ul ul li.active a {
-  color: #5fbeaa;
+  color: #85aaef;
 }
 #sidebar-menu ul ul a {
-  color: #98a6ad;
+  color: #fff;
   display: block;
   padding: 10px 20px 10px 65px;
 }
@@ -1369,17 +1369,17 @@ body.fixed-left .side-menu.left {
   margin-top: 2px;
 }
 #sidebar-menu .subdrop {
-  color: #5fbeaa !important;
+  color: #fff !important;
 }
 #sidebar-menu > ul > li > a {
-  color: #98a6ad;
+  color: #fff;
   display: block;
   padding: 12px 20px;
   margin: 4px 0px;
   border-left: 3px solid transparent;
 }
 #sidebar-menu > ul > li > a:hover {
-  color: #5fbeaa;
+  color: rgba(255, 255, 255, 0.7);
   text-decoration: none;
 }
 #sidebar-menu > ul > li > a > span {
@@ -1431,9 +1431,9 @@ body.fixed-left .side-menu.left {
   margin: 3px 0 0 0;
 }
 #sidebar-menu > ul > li > a.active {
-  background: #313a43 !important;
-  border-left: 3px solid #5fbeaa;
-  color: #5fbeaa !important;
+  background: #85aaef !important;
+  border-left: 3px solid #fff;
+  color: #fff !important;
 }
 .menu-title {
   padding: 12px 20px !important;
